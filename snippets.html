@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代码片段 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="snippets.html" class="text-cyber-400 font-semibold">代码片段</a>
+                    <a href="#about" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    代码片段库
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    收录各种编程语言的常用代码片段，提高开发效率
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-8 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative max-w-md mx-auto">
+                <input type="text" id="search-input" placeholder="搜索代码片段..." 
+                       class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 pl-12 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 focus:ring-2 focus:ring-cyber-500/20 transition-all duration-200">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Snippet Cards Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="snippet-cards">
+                
+                <!-- Regex Snippets Card -->
+                <div class="snippet-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300 group cursor-pointer" 
+                     data-category="工具函数" onclick="location.href='regex-snippets.html'">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">正则表达式</h3>
+                    <p class="text-gray-300 mb-6">常用正则表达式模式，支持多种编程语言，包括邮箱、手机号、URL等验证</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Python</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">JavaScript</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Java</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-green-400">
+                        /^[\w\.-]+@[\w\.-]+\.\w+$/<br>
+                        # 邮箱验证正则
+                    </div>
+                </div>
+
+                <!-- Error Handling Snippets Card -->
+                <div class="snippet-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-red-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="错误处理">
+                    <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">错误处理</h3>
+                    <p class="text-gray-300 mb-6">各种编程语言的异常处理、错误捕获和日志记录代码片段</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">异常捕获</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">日志记录</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-red-400">
+                        try:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;# code here<br>
+                        except Exception as e:
+                    </div>
+                </div>
+
+                <!-- HTTP Requests Card -->
+                <div class="snippet-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="网络请求">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">HTTP 请求</h3>
+                    <p class="text-gray-300 mb-6">各种语言的HTTP请求代码片段，包括GET、POST、文件上传等</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">GET请求</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">POST请求</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-blue-400">
+                        requests.get(url)<br>
+                        fetch(url)
+                    </div>
+                </div>
+
+                <!-- Database Operations Card -->
+                <div class="snippet-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="数据库操作">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">数据库操作</h3>
+                    <p class="text-gray-300 mb-6">数据库连接、查询、插入、更新等常用操作代码片段</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">MySQL</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">MongoDB</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">PostgreSQL</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-purple-400">
+                        SELECT * FROM users<br>
+                        WHERE id = ?
+                    </div>
+                </div>
+
+                <!-- String Manipulation Card -->
+                <div class="snippet-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="字符串处理">
+                    <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">字符串处理</h3>
+                    <p class="text-gray-300 mb-6">字符串格式化、分割、替换、编码解码等常用操作</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">格式化</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">编码转换</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-yellow-400">
+                        str.replace(old, new)<br>
+                        str.split(delimiter)
+                    </div>
+                </div>
+
+                <!-- File Operations Card -->
+                <div class="snippet-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-orange-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="文件操作">
+                    <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">文件操作</h3>
+                    <p class="text-gray-300 mb-6">文件读写、目录遍历、文件压缩解压等操作代码片段</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">读写文件</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">目录操作</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-orange-400">
+                        with open(file) as f:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;content = f.read()
+                    </div>
+                </div>
+
+                <!-- JSON Processing Card -->
+                <div class="snippet-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-indigo-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="数据处理">
+                    <div class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">JSON 处理</h3>
+                    <p class="text-gray-300 mb-6">JSON数据解析、序列化、格式化和验证代码片段</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">解析</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">序列化</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-indigo-400">
+                        JSON.parse(jsonString)<br>
+                        json.dumps(data)
+                    </div>
+                </div>
+
+                <!-- Date Time Card -->
+                <div class="snippet-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-pink-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="时间处理">
+                    <div class="w-16 h-16 bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">时间日期</h3>
+                    <p class="text-gray-300 mb-6">日期时间格式化、计算、转换等常用操作代码片段</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">格式化</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">时区转换</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-pink-400">
+                        datetime.now()<br>
+                        new Date()
+                    </div>
+                </div>
+
+                <!-- Encryption Card -->
+                <div class="snippet-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-teal-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="加密安全">
+                    <div class="w-16 h-16 bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">加密安全</h3>
+                    <p class="text-gray-300 mb-6">密码哈希、数据加密解密、JWT令牌等安全相关代码片段</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">MD5/SHA</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">AES加密</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-teal-400">
+                        hashlib.md5(data)<br>
+                        bcrypt.hash(password)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Search functionality
+        $('#search-input').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            $('.snippet-card').each(function() {
+                const cardText = $(this).text().toLowerCase();
+                if (cardText.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 50) {
+                $('nav').addClass('bg-opacity-95');
+            } else {
+                $('nav').removeClass('bg-opacity-95');
+            }
+        });
+    </script>
+</body>
+</html>

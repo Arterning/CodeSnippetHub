@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则表达式代码片段 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="snippets.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="#about" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center mb-8">
+                <a href="snippets.html" class="text-gray-400 hover:text-cyber-400 transition-colors mr-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </a>
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <span class="text-green-400">正则表达式</span>代码片段
+                    </h1>
+                    <p class="text-xl text-gray-300">
+                        常用正则表达式模式，支持多种编程语言的语法格式
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Language Selection -->
+    <section class="py-8 bg-gray-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gray-700 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-white mb-4">选择编程语言</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <button class="lang-btn bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="python">
+                        Python
+                    </button>
+                    <button class="lang-btn bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="javascript">
+                        JavaScript
+                    </button>
+                    <button class="lang-btn bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="java">
+                        Java
+                    </button>
+                    <button class="lang-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="go">
+                        Go
+                    </button>
+                    <button class="lang-btn bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="php">
+                        PHP
+                    </button>
+                    <button class="lang-btn bg-orange-600 hover:bg-orange-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="csharp">
+                        C#
+                    </button>
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="text-gray-400">当前语言: </span>
+                    <span id="selected-language" class="text-yellow-400 font-semibold">Python (默认)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-6 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative max-w-md mx-auto">
+                <input type="text" id="search-input" placeholder="搜索正则表达式..." 
+                       class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 pl-12 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 focus:ring-2 focus:ring-cyber-500/20 transition-all duration-200">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regex Patterns Section -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- Email Validation -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">邮箱验证</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">验证邮箱地址格式是否正确</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入邮箱地址测试" value="example@domain.com" data-pattern="email">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="email">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="email-pattern">^[\w\.-]+@[\w\.-]+\.\w+$</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="email-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+email = 'example@domain.com'
+if re.match(pattern, email):
+    print('Valid email')
+else:
+    print('Invalid email')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">测试结果:</div>
+                        <div id="email-test-result" class="text-green-400 text-sm">✓ 匹配成功</div>
+                    </div>
+                </div>
+
+                <!-- Phone Number Validation -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">手机号验证</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">验证中国大陆手机号码格式</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入手机号码测试" value="13812345678" data-pattern="phone">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="phone">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="phone-pattern">^1[3-9]\d{9}$</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="phone-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'^1[3-9]\d{9}$'
+phone = '13812345678'
+if re.match(pattern, phone):
+    print('Valid phone number')
+else:
+    print('Invalid phone number')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">测试结果:</div>
+                        <div id="phone-test-result" class="text-green-400 text-sm">✓ 匹配成功</div>
+                    </div>
+                </div>
+
+                <!-- URL Validation -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">URL 匹配</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">匹配HTTP/HTTPS协议的URL地址</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入URL地址测试" value="https://www.example.com/path?param=value" data-pattern="url">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="url">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="url-pattern">^https?:\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="url-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'^https?:\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$'
+url = 'https://www.example.com/path?param=value'
+if re.match(pattern, url):
+    print('Valid URL')
+else:
+    print('Invalid URL')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">测试结果:</div>
+                        <div id="url-test-result" class="text-green-400 text-sm">✓ 匹配成功</div>
+                    </div>
+                </div>
+
+                <!-- Domain Extraction -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">提取域名</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">从URL中提取域名部分</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入URL提取域名" value="https://www.example.com/path/page.html" data-pattern="domain">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="domain">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="domain-pattern">https?:\/\/([\w\.-]+)</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="domain-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'https?:\/\/([\w\.-]+)'
+url = 'https://www.example.com/path/page.html'
+match = re.search(pattern, url)
+if match:
+    domain = match.group(1)
+    print(f'Domain: {domain}')
+else:
+    print('No domain found')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">提取结果:</div>
+                        <div id="domain-test-result" class="text-green-400 text-sm">www.example.com</div>
+                    </div>
+                </div>
+
+                <!-- Date Format -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">日期格式 YYYY-MM-DD</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">匹配标准日期格式 YYYY-MM-DD</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入日期测试" value="2024-03-15" data-pattern="date">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="date">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="date-pattern">^\d{4}-\d{2}-\d{2}$</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="date-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'^\d{4}-\d{2}-\d{2}$'
+date = '2024-03-15'
+if re.match(pattern, date):
+    print('Valid date format')
+else:
+    print('Invalid date format')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">测试结果:</div>
+                        <div id="date-test-result" class="text-green-400 text-sm">✓ 匹配成功</div>
+                    </div>
+                </div>
+
+                <!-- Password Strength -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">密码强度验证</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">验证密码包含大小写字母、数字和特殊字符，长度8-20位</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入密码测试" value="StrongPass123!" data-pattern="password">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="password">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="password-pattern">^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="password-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$'
+password = 'StrongPass123!'
+if re.match(pattern, password):
+    print('Strong password')
+else:
+    print('Weak password')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">测试结果:</div>
+                        <div id="password-test-result" class="text-green-400 text-sm">✓ 匹配成功</div>
+                    </div>
+                </div>
+
+                <!-- Positive Integer -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">正整数</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">匹配正整数（不包括0）</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入数字测试" value="123" data-pattern="positive-integer">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="positive-integer">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="positive-integer-pattern">^[1-9]\d*$</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="positive-integer-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'^[1-9]\d*$'
+number = '123'
+if re.match(pattern, number):
+    print('Valid positive integer')
+else:
+    print('Invalid positive integer')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">测试结果:</div>
+                        <div id="positive-integer-test-result" class="text-green-400 text-sm">✓ 匹配成功</div>
+                    </div>
+                </div>
+
+                <!-- File Extension -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-pink-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">文件扩展名匹配</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">匹配指定扩展名的文件（jpg、png、gif）</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入文件名测试" value="image.jpg" data-pattern="file-extension">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="file-extension">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="file-extension-pattern">^.+\.(jpg|jpeg|png|gif)$</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="file-extension-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'^.+\.(jpg|jpeg|png|gif)$'
+filename = 'image.jpg'
+if re.match(pattern, filename, re.IGNORECASE):
+    print('Valid image file')
+else:
+    print('Invalid image file')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">测试结果:</div>
+                        <div id="file-extension-test-result" class="text-green-400 text-sm">✓ 匹配成功</div>
+                    </div>
+                </div>
+
+                <!-- IPv4 Address -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-cyan-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">IPv4 地址</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">验证IPv4地址格式</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入IP地址测试" value="192.168.1.1" data-pattern="ipv4">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="ipv4">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="ipv4-pattern">^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="ipv4-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+ip = '192.168.1.1'
+if re.match(pattern, ip):
+    print('Valid IPv4 address')
+else:
+    print('Invalid IPv4 address')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">测试结果:</div>
+                        <div id="ipv4-test-result" class="text-green-400 text-sm">✓ 匹配成功</div>
+                    </div>
+                </div>
+
+                <!-- Chinese ID Card -->
+                <div class="regex-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-teal-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">身份证号码（18位）</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">验证中国大陆18位身份证号码格式</p>
+                    <div class="mb-4">
+                        <label class="block text-gray-400 text-sm mb-2">测试文本：</label>
+                        <input type="text" class="test-input w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm" 
+                               placeholder="输入身份证号码测试" value="110101199001011234" data-pattern="id-card">
+                    </div>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">正则表达式:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-pattern="id-card">
+                                复制代码
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-green-400 font-mono text-sm mb-2" id="id-card-pattern">^[1-9]\d{5}(18|19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[0-9Xx]$</div>
+                        </div>
+                        <div class="border-t border-gray-600 pt-3">
+                            <div class="text-gray-400 text-sm mb-2">代码示例:</div>
+                            <pre id="id-card-code" class="text-blue-400 font-mono text-sm overflow-x-auto">import re
+
+pattern = r'^[1-9]\d{5}(18|19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[0-9Xx]$'
+id_card = '110101199001011234'
+if re.match(pattern, id_card):
+    print('Valid ID card number')
+else:
+    print('Invalid ID card number')</pre>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-700 rounded-lg">
+                        <div class="text-gray-400 text-sm mb-1">测试结果:</div>
+                        <div id="id-card-test-result" class="text-green-400 text-sm">✓ 匹配成功</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Copy Success Toast -->
+    <div id="copy-toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            代码已复制到剪贴板！
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentLanguage = 'python';
+        
+        // Regular expression patterns for different languages
+        const regexPatterns = {
+            email: {
+                pattern: '^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$',
+                python: `import re
+
+pattern = r'^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$'
+email = 'example@domain.com'
+if re.match(pattern, email):
+    print('Valid email')
+else:
+    print('Invalid email')`,
+                javascript: `const pattern = /^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$/;
+const email = 'example@domain.com';
+if (pattern.test(email)) {
+    console.log('Valid email');
+} else {
+    console.log('Invalid email');
+}`,
+                java: `import java.util.regex.Pattern;
+
+Pattern pattern = Pattern.compile("^[\\\\w\\\\.-]+@[\\\\w\\\\.-]+\\\\\.\\\\w+$");
+String email = "example@domain.com";
+if (pattern.matcher(email).matches()) {
+    System.out.println("Valid email");
+} else {
+    System.out.println("Invalid email");
+}`,
+                go: `import (
+    "fmt"
+    "regexp"
+)
+
+pattern := regexp.MustCompile(\`^[\\w\\.-]+@[\\w\\.-]+\\.[\\w]+$\`)
+email := "example@domain.com"
+if pattern.MatchString(email) {
+    fmt.Println("Valid email")
+} else {
+    fmt.Println("Invalid email")
+}`,
+                php: `<?php
+$pattern = '/^[\\w\\.-]+@[\\w\\.-]+\\.[\\w]+$/';
+$email = 'example@domain.com';
+if (preg_match($pattern, $email)) {
+    echo 'Valid email';
+} else {
+    echo 'Invalid email';
+}
+?>`,
+                csharp: `using System;
+using System.Text.RegularExpressions;
+
+Regex pattern = new Regex(@"^[\\w\\.-]+@[\\w\\.-]+\\.[\\w]+$");
+string email = "example@domain.com";
+if (pattern.IsMatch(email)) {
+    Console.WriteLine("Valid email");
+} else {
+    Console.WriteLine("Invalid email");
+}`
+            },
+            phone: {
+                pattern: '^1[3-9]\\d{9}$',
+                python: `import re
+
+pattern = r'^1[3-9]\\d{9}$'
+phone = '13812345678'
+if re.match(pattern, phone):
+    print('Valid phone number')
+else:
+    print('Invalid phone number')`,
+                javascript: `const pattern = /^1[3-9]\\d{9}$/;
+const phone = '13812345678';
+if (pattern.test(phone)) {
+    console.log('Valid phone number');
+} else {
+    console.log('Invalid phone number');
+}`,
+                java: `import java.util.regex.Pattern;
+
+Pattern pattern = Pattern.compile("^1[3-9]\\\\d{9}$");
+String phone = "13812345678";
+if (pattern.matcher(phone).matches()) {
+    System.out.println("Valid phone number");
+} else {
+    System.out.println("Invalid phone number");
+}`,
+                go: `import (
+    "fmt"
+    "regexp"
+)
+
+pattern := regexp.MustCompile(\`^1[3-9]\\d{9}$\`)
+phone := "13812345678"
+if pattern.MatchString(phone) {
+    fmt.Println("Valid phone number")
+} else {
+    fmt.Println("Invalid phone number")
+}`,
+                php: `<?php
+$pattern = '/^1[3-9]\\d{9}$/';
+$phone = '13812345678';
+if (preg_match($pattern, $phone)) {
+    echo 'Valid phone number';
+} else {
+    echo 'Invalid phone number';
+}
+?>`,
+                csharp: `using System;
+using System.Text.RegularExpressions;
+
+Regex pattern = new Regex(@"^1[3-9]\\d{9}$");
+string phone = "13812345678";
+if (pattern.IsMatch(phone)) {
+    Console.WriteLine("Valid phone number");
+} else {
+    Console.WriteLine("Invalid phone number");
+}`
+            }
+        };
+
+        // Language selection
+        $('.lang-btn').click(function() {
+            $('.lang-btn').removeClass('bg-yellow-600 bg-yellow-500 bg-red-600 bg-blue-600 bg-purple-600 bg-orange-600');
+            
+            const lang = $(this).data('lang');
+            currentLanguage = lang;
+            
+            // Update selected language display
+            const langNames = {
+                python: 'Python',
+                javascript: 'JavaScript', 
+                java: 'Java',
+                go: 'Go',
+                php: 'PHP',
+                csharp: 'C#'
+            };
+            $('#selected-language').text(langNames[lang]);
+            
+            // Highlight selected button
+            const colors = {
+                python: 'bg-yellow-600',
+                javascript: 'bg-yellow-500',
+                java: 'bg-red-600',
+                go: 'bg-blue-600',
+                php: 'bg-purple-600',
+                csharp: 'bg-orange-600'
+            };
+            $(this).addClass(colors[lang]);
+            
+            updateAllCodeExamples();
+        });
+
+        // Update all code examples based on selected language
+        function updateAllCodeExamples() {
+            Object.keys(regexPatterns).forEach(patternKey => {
+                const codeElement = $(`#${patternKey}-code`);
+                if (codeElement.length && regexPatterns[patternKey][currentLanguage]) {
+                    codeElement.text(regexPatterns[patternKey][currentLanguage]);
+                }
+            });
+        }
+
+        // Test regex patterns
+        function testRegexPattern(pattern, testString) {
+            try {
+                const regex = new RegExp(pattern);
+                return regex.test(testString);
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Test input change handlers
+        $('.test-input').on('input', function() {
+            const patternType = $(this).data('pattern');
+            const testValue = $(this).val();
+            const resultElement = $(`#${patternType}-test-result`);
+            
+            if (!testValue) {
+                resultElement.text('请输入测试文本').removeClass('text-green-400 text-red-400').addClass('text-gray-400');
+                return;
+            }
+
+            let pattern, isMatch;
+            
+            switch(patternType) {
+                case 'email':
+                    pattern = '^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$';
+                    isMatch = testRegexPattern(pattern, testValue);
+                    break;
+                case 'phone':
+                    pattern = '^1[3-9]\\d{9}$';
+                    isMatch = testRegexPattern(pattern, testValue);
+                    break;
+                case 'url':
+                    pattern = '^https?:\\/\\/[\\w\\-]+(\.[\\w\\-]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?$';
+                    isMatch = testRegexPattern(pattern, testValue);
+                    break;
+                case 'domain':
+                    pattern = 'https?:\\/\\/([\\w\\.-]+)';
+                    const match = testValue.match(new RegExp(pattern));
+                    if (match) {
+                        resultElement.text(match[1]).removeClass('text-red-400').addClass('text-green-400');
+                        return;
+                    } else {
+                        resultElement.text('✗ 未匹配到域名').removeClass('text-green-400').addClass('text-red-400');
+                        return;
+                    }
+                case 'date':
+                    pattern = '^\\d{4}-\\d{2}-\\d{2}$';
+                    isMatch = testRegexPattern(pattern, testValue);
+                    break;
+                case 'password':
+                    pattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$';
+                    isMatch = testRegexPattern(pattern, testValue);
+                    break;
+                case 'positive-integer':
+                    pattern = '^[1-9]\\d*$';
+                    isMatch = testRegexPattern(pattern, testValue);
+                    break;
+                case 'file-extension':
+                    pattern = '^.+\\.(jpg|jpeg|png|gif)$';
+                    isMatch = testRegexPattern(pattern, testValue.toLowerCase());
+                    break;
+                case 'ipv4':
+                    pattern = '^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$';
+                    isMatch = testRegexPattern(pattern, testValue);
+                    break;
+                case 'id-card':
+                    pattern = '^[1-9]\\d{5}(18|19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])\\d{3}[0-9Xx]$';
+                    isMatch = testRegexPattern(pattern, testValue);
+                    break;
+                default:
+                    isMatch = false;
+            }
+
+            if (isMatch) {
+                resultElement.text('✓ 匹配成功').removeClass('text-red-400').addClass('text-green-400');
+            } else {
+                resultElement.text('✗ 匹配失败').removeClass('text-green-400').addClass('text-red-400');
+            }
+        });
+
+        // Search functionality
+        $('#search-input').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            $('.regex-item').each(function() {
+                const itemText = $(this).text().toLowerCase();
+                if (itemText.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showCopyToast();
+            }).catch(function() {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyToast();
+            });
+        }
+
+        // Show copy success toast
+        function showCopyToast() {
+            const toast = $('#copy-toast');
+            toast.removeClass('translate-x-full').addClass('translate-x-0');
+            setTimeout(() => {
+                toast.removeClass('translate-x-0').addClass('translate-x-full');
+            }, 2000);
+        }
+
+        // Copy button click handlers
+        $('.copy-btn').click(function() {
+            const patternType = $(this).data('pattern');
+            const codeElement = $(`#${patternType}-code`);
+            
+            if (codeElement.length) {
+                const codeText = codeElement.text();
+                copyToClipboard(codeText);
+            }
+        });
+
+        // Initialize with default language
+        updateAllCodeExamples();
+    </script>
+</body>
+</html>
