@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeSnippetHub - 代码片段与命令工具</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="#snippets" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="#about" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-300 hover:text-white" id="mobile-menu-button">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-0 -left-4 w-72 h-72 bg-cyber-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+            <div class="absolute top-0 -right-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-4000"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                    快速生成
+                    <span class="bg-gradient-to-r from-cyber-400 to-purple-400 bg-clip-text text-transparent">
+                        命令与代码
+                    </span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    智能生成Linux命令、提供常用代码片段，让开发更高效
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-cyber-500 to-cyber-600 hover:from-cyber-600 hover:to-cyber-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyber-500/25">
+                        开始使用
+                    </button>
+                    <button class="border border-gray-600 text-gray-300 hover:text-white hover:border-gray-500 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300">
+                        查看示例
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-gray-800" id="features">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">核心功能</h2>
+                <p class="text-xl text-gray-300">简化你的开发工作流程</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Command Generator -->
+                <div class="bg-gray-900 rounded-xl p-8 border border-gray-700 hover:border-cyber-500/50 transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyber-500 to-cyber-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">命令生成器</h3>
+                    <p class="text-gray-300 mb-6">支持防火墙、系统服务、网络配置等常用Linux命令的智能生成，支持Ubuntu、CentOS等主流发行版</p>
+                    <div class="bg-gray-800 rounded-lg p-4 font-mono text-sm text-cyber-400">
+                        # Ubuntu 打开防火墙端口<br>
+                        sudo ufw allow 80/tcp
+                    </div>
+                </div>
+
+                <!-- Code Snippets -->
+                <div class="bg-gray-900 rounded-xl p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">代码片段库</h3>
+                    <p class="text-gray-300 mb-6">收录Python、JavaScript、Go等多种编程语言的常用代码片段，支持一键复制</p>
+                    <div class="bg-gray-800 rounded-lg p-4 font-mono text-sm text-purple-400">
+                        import traceback<br>
+                        traceback.print_exc()
+                    </div>
+                </div>
+
+                <!-- Quick Access -->
+                <div class="bg-gray-900 rounded-xl p-8 border border-gray-700 hover:border-pink-500/50 transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">快速访问</h3>
+                    <p class="text-gray-300 mb-6">智能搜索和分类，快速找到你需要的命令或代码片段</p>
+                    <div class="bg-gray-800 rounded-lg p-4 font-mono text-sm text-pink-400">
+                        搜索: "防火墙" "python错误"
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section class="py-24 bg-gray-900" id="quick-start">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">快速开始</h2>
+                <p class="text-xl text-gray-300">三步搞定你的需求</p>
+            </div>
+            
+            <div class="space-y-8">
+                <div class="flex items-start space-x-6">
+                    <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-cyber-500 to-cyber-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">选择操作类型</h3>
+                        <p class="text-gray-300">选择你要生成的命令类型或浏览代码片段分类</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-6">
+                    <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">填写参数</h3>
+                        <p class="text-gray-300">输入端口号、操作系统版本等必要参数</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-6">
+                    <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold">3</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">一键复制</h3>
+                        <p class="text-gray-300">生成的命令或代码片段一键复制到剪贴板</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-gradient-to-r from-cyber-500 to-purple-500 hover:from-cyber-600 hover:to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    立即体验
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                    <p class="text-gray-300 max-w-md">提高开发效率的命令和代码片段工具，让编程更简单。</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">功能</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors">命令生成</a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors">代码片段</a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors">快速搜索</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">关于</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors">使用指南</a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors">反馈建议</a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors">开源项目</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        $('#mobile-menu-button').click(function() {
+            // Toggle mobile menu logic will be added here
+            console.log('Mobile menu clicked');
+        });
+
+        // Smooth scroll for anchor links
+        $('a[href^="#"]').click(function(e) {
+            e.preventDefault();
+            const target = $($(this).attr('href'));
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 64
+                }, 500);
+            }
+        });
+
+        // Add scroll effect to navbar
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 50) {
+                $('nav').addClass('bg-opacity-95');
+            } else {
+                $('nav').removeClass('bg-opacity-95');
+            }
+        });
+    </script>
+</body>
+</html>

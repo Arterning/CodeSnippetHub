@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git 命令 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="#snippets" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="#about" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center mb-8">
+                <a href="commands.html" class="text-gray-400 hover:text-cyber-400 transition-colors mr-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </a>
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <span class="text-orange-400">Git</span> 命令大全
+                    </h1>
+                    <p class="text-xl text-gray-300">
+                        Git版本控制系统常用命令，涵盖仓库管理、分支操作、远程协作等场景
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="py-8 bg-gray-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                    <div class="relative">
+                        <input type="text" id="search-input" placeholder="搜索Git命令..." 
+                               class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 pl-12 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 focus:ring-2 focus:ring-cyber-500/20 transition-all duration-200">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <button class="category-filter active bg-cyber-600 hover:bg-cyber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-category="all">
+                        全部
+                    </button>
+                    <button class="category-filter bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-category="basic">
+                        基础操作
+                    </button>
+                    <button class="category-filter bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-category="branch">
+                        分支管理
+                    </button>
+                    <button class="category-filter bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-category="remote">
+                        远程仓库
+                    </button>
+                    <button class="category-filter bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-category="advanced">
+                        高级操作
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Basic Operations -->
+            <div class="command-category mb-12" data-category="basic">
+                <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    基础操作
+                </h2>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">初始化仓库</h3>
+                        <p class="text-gray-300 mb-4">在当前目录创建新的Git仓库</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git init">
+                                    复制
+                                </button>
+                            </div>
+                            <code class="text-green-400 font-mono text-sm">git init</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">克隆仓库</h3>
+                        <p class="text-gray-300 mb-4">从远程仓库克隆到本地</p>
+                        <div class="mb-4">
+                            <input type="text" id="clone-url" placeholder="输入仓库URL" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-clone">
+                                    复制
+                                </button>
+                            </div>
+                            <code id="clone-command" class="text-green-400 font-mono text-sm">git clone &lt;repository-url&gt;</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">查看状态</h3>
+                        <p class="text-gray-300 mb-4">查看工作区和暂存区状态</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git status">
+                                    复制
+                                </button>
+                            </div>
+                            <code class="text-green-400 font-mono text-sm">git status</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">添加文件</h3>
+                        <p class="text-gray-300 mb-4">将文件添加到暂存区</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">常用命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git add . # 添加所有文件&#10;git add filename # 添加指定文件">
+                                    复制
+                                </button>
+                            </div>
+                            <div class="text-green-400 font-mono text-sm">
+                                git add . # 添加所有文件<br>
+                                git add filename # 添加指定文件
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">提交更改</h3>
+                        <p class="text-gray-300 mb-4">将暂存区内容提交到仓库</p>
+                        <div class="mb-4">
+                            <input type="text" id="commit-message" placeholder="输入提交信息" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-commit">
+                                    复制
+                                </button>
+                            </div>
+                            <code id="commit-command" class="text-green-400 font-mono text-sm">git commit -m "commit message"</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">查看日志</h3>
+                        <p class="text-gray-300 mb-4">查看提交历史</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">常用命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git log --oneline # 简洁格式&#10;git log --graph # 图形化显示">
+                                    复制
+                                </button>
+                            </div>
+                            <div class="text-green-400 font-mono text-sm">
+                                git log --oneline # 简洁格式<br>
+                                git log --graph # 图形化显示
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Branch Management -->
+            <div class="command-category mb-12" data-category="branch">
+                <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    分支管理
+                </h2>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">查看分支</h3>
+                        <p class="text-gray-300 mb-4">查看本地和远程分支</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git branch -a # 查看所有分支&#10;git branch -r # 查看远程分支">
+                                    复制
+                                </button>
+                            </div>
+                            <div class="text-blue-400 font-mono text-sm">
+                                git branch -a # 查看所有分支<br>
+                                git branch -r # 查看远程分支
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">创建分支</h3>
+                        <p class="text-gray-300 mb-4">创建新分支</p>
+                        <div class="mb-4">
+                            <input type="text" id="branch-name" placeholder="输入分支名称" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-branch">
+                                    复制
+                                </button>
+                            </div>
+                            <code id="branch-command" class="text-blue-400 font-mono text-sm">git branch &lt;branch-name&gt;</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">切换分支</h3>
+                        <p class="text-gray-300 mb-4">切换到指定分支</p>
+                        <div class="mb-4">
+                            <input type="text" id="checkout-branch" placeholder="输入分支名称" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-checkout">
+                                    复制
+                                </button>
+                            </div>
+                            <code id="checkout-command" class="text-blue-400 font-mono text-sm">git checkout &lt;branch-name&gt;</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">创建并切换分支</h3>
+                        <p class="text-gray-300 mb-4">一次性创建并切换到新分支</p>
+                        <div class="mb-4">
+                            <input type="text" id="checkout-new-branch" placeholder="输入新分支名称" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-checkout-new">
+                                    复制
+                                </button>
+                            </div>
+                            <code id="checkout-new-command" class="text-blue-400 font-mono text-sm">git checkout -b &lt;branch-name&gt;</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">合并分支</h3>
+                        <p class="text-gray-300 mb-4">将指定分支合并到当前分支</p>
+                        <div class="mb-4">
+                            <input type="text" id="merge-branch" placeholder="输入要合并的分支名称" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-merge">
+                                    复制
+                                </button>
+                            </div>
+                            <code id="merge-command" class="text-blue-400 font-mono text-sm">git merge &lt;branch-name&gt;</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">删除分支</h3>
+                        <p class="text-gray-300 mb-4">删除本地分支</p>
+                        <div class="mb-4">
+                            <input type="text" id="delete-branch" placeholder="输入要删除的分支名称" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-delete-branch">
+                                    复制
+                                </button>
+                            </div>
+                            <div id="delete-branch-command" class="text-blue-400 font-mono text-sm">
+                                git branch -d &lt;branch-name&gt; # 安全删除<br>
+                                git branch -D &lt;branch-name&gt; # 强制删除
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Remote Repository -->
+            <div class="command-category mb-12" data-category="remote">
+                <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                        </svg>
+                    </div>
+                    远程仓库
+                </h2>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">查看远程仓库</h3>
+                        <p class="text-gray-300 mb-4">查看已配置的远程仓库</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git remote -v">
+                                    复制
+                                </button>
+                            </div>
+                            <code class="text-purple-400 font-mono text-sm">git remote -v</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">添加远程仓库</h3>
+                        <p class="text-gray-300 mb-4">添加新的远程仓库</p>
+                        <div class="mb-4 space-y-2">
+                            <input type="text" id="remote-name" placeholder="远程仓库名称 (如: origin)" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                            <input type="text" id="remote-url" placeholder="远程仓库URL" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-remote-add">
+                                    复制
+                                </button>
+                            </div>
+                            <code id="remote-add-command" class="text-purple-400 font-mono text-sm">git remote add &lt;name&gt; &lt;url&gt;</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">推送到远程</h3>
+                        <p class="text-gray-300 mb-4">将本地更改推送到远程仓库</p>
+                        <div class="mb-4 space-y-2">
+                            <input type="text" id="push-remote" placeholder="远程仓库名称 (如: origin)" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                            <input type="text" id="push-branch" placeholder="分支名称 (如: main)" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-push">
+                                    复制
+                                </button>
+                            </div>
+                            <code id="push-command" class="text-purple-400 font-mono text-sm">git push &lt;remote&gt; &lt;branch&gt;</code>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">拉取更新</h3>
+                        <p class="text-gray-300 mb-4">从远程仓库拉取最新更改</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">常用命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git pull # 拉取并合并&#10;git fetch # 仅拉取不合并">
+                                    复制
+                                </button>
+                            </div>
+                            <div class="text-purple-400 font-mono text-sm">
+                                git pull # 拉取并合并<br>
+                                git fetch # 仅拉取不合并
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Advanced Operations -->
+            <div class="command-category mb-12" data-category="advanced">
+                <h2 class="text-2xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    高级操作
+                </h2>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">暂存更改</h3>
+                        <p class="text-gray-300 mb-4">临时保存当前工作区更改</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">常用命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git stash # 暂存更改&#10;git stash pop # 恢复暂存&#10;git stash list # 查看暂存列表">
+                                    复制
+                                </button>
+                            </div>
+                            <div class="text-red-400 font-mono text-sm">
+                                git stash # 暂存更改<br>
+                                git stash pop # 恢复暂存<br>
+                                git stash list # 查看暂存列表
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">重写历史</h3>
+                        <p class="text-gray-300 mb-4">修改提交历史</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">常用命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git commit --amend # 修改最后一次提交&#10;git reset --soft HEAD~1 # 撤销最后一次提交但保留更改">
+                                    复制
+                                </button>
+                            </div>
+                            <div class="text-red-400 font-mono text-sm">
+                                git commit --amend # 修改最后一次提交<br>
+                                git reset --soft HEAD~1 # 撤销最后一次提交但保留更改
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">标签管理</h3>
+                        <p class="text-gray-300 mb-4">创建和管理版本标签</p>
+                        <div class="mb-4">
+                            <input type="text" id="tag-name" placeholder="输入标签名称 (如: v1.0.0)" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 text-sm">
+                        </div>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-tag">
+                                    复制
+                                </button>
+                            </div>
+                            <div id="tag-command" class="text-red-400 font-mono text-sm">
+                                git tag &lt;tag-name&gt; # 创建标签<br>
+                                git push origin &lt;tag-name&gt; # 推送标签
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-3">查找和比较</h3>
+                        <p class="text-gray-300 mb-4">查找提交和比较差异</p>
+                        <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400 text-sm">常用命令:</span>
+                                <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git diff # 查看工作区差异&#10;git diff --staged # 查看暂存区差异&#10;git blame filename # 查看文件修改历史">
+                                    复制
+                                </button>
+                            </div>
+                            <div class="text-red-400 font-mono text-sm">
+                                git diff # 查看工作区差异<br>
+                                git diff --staged # 查看暂存区差异<br>
+                                git blame filename # 查看文件修改历史
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Copy Success Toast -->
+    <div id="copy-toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            命令已复制到剪贴板！
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dynamic command updates
+        $('#clone-url').on('input', function() {
+            const url = $(this).val();
+            if (url) {
+                $('#clone-command').text(`git clone ${url}`);
+            } else {
+                $('#clone-command').text('git clone <repository-url>');
+            }
+        });
+
+        $('#commit-message').on('input', function() {
+            const message = $(this).val();
+            if (message) {
+                $('#commit-command').text(`git commit -m "${message}"`);
+            } else {
+                $('#commit-command').text('git commit -m "commit message"');
+            }
+        });
+
+        $('#branch-name').on('input', function() {
+            const name = $(this).val();
+            if (name) {
+                $('#branch-command').text(`git branch ${name}`);
+            } else {
+                $('#branch-command').text('git branch <branch-name>');
+            }
+        });
+
+        $('#checkout-branch').on('input', function() {
+            const name = $(this).val();
+            if (name) {
+                $('#checkout-command').text(`git checkout ${name}`);
+            } else {
+                $('#checkout-command').text('git checkout <branch-name>');
+            }
+        });
+
+        $('#checkout-new-branch').on('input', function() {
+            const name = $(this).val();
+            if (name) {
+                $('#checkout-new-command').text(`git checkout -b ${name}`);
+            } else {
+                $('#checkout-new-command').text('git checkout -b <branch-name>');
+            }
+        });
+
+        $('#merge-branch').on('input', function() {
+            const name = $(this).val();
+            if (name) {
+                $('#merge-command').text(`git merge ${name}`);
+            } else {
+                $('#merge-command').text('git merge <branch-name>');
+            }
+        });
+
+        $('#delete-branch').on('input', function() {
+            const name = $(this).val();
+            if (name) {
+                $('#delete-branch-command').html(`git branch -d ${name} # 安全删除<br>git branch -D ${name} # 强制删除`);
+            } else {
+                $('#delete-branch-command').html('git branch -d &lt;branch-name&gt; # 安全删除<br>git branch -D &lt;branch-name&gt; # 强制删除');
+            }
+        });
+
+        $('#remote-name, #remote-url').on('input', function() {
+            const name = $('#remote-name').val();
+            const url = $('#remote-url').val();
+            if (name && url) {
+                $('#remote-add-command').text(`git remote add ${name} ${url}`);
+            } else {
+                $('#remote-add-command').text('git remote add <name> <url>');
+            }
+        });
+
+        $('#push-remote, #push-branch').on('input', function() {
+            const remote = $('#push-remote').val();
+            const branch = $('#push-branch').val();
+            if (remote && branch) {
+                $('#push-command').text(`git push ${remote} ${branch}`);
+            } else {
+                $('#push-command').text('git push <remote> <branch>');
+            }
+        });
+
+        $('#tag-name').on('input', function() {
+            const name = $(this).val();
+            if (name) {
+                $('#tag-command').html(`git tag ${name} # 创建标签<br>git push origin ${name} # 推送标签`);
+            } else {
+                $('#tag-command').html('git tag &lt;tag-name&gt; # 创建标签<br>git push origin &lt;tag-name&gt; # 推送标签');
+            }
+        });
+
+        // Category filter
+        $('.category-filter').click(function() {
+            $('.category-filter').removeClass('active bg-cyber-600').addClass('bg-gray-700 text-gray-300');
+            $(this).addClass('active bg-cyber-600 text-white').removeClass('bg-gray-700 text-gray-300');
+            
+            const category = $(this).data('category');
+            if (category === 'all') {
+                $('.command-category').show();
+            } else {
+                $('.command-category').hide();
+                $(`.command-category[data-category="${category}"]`).show();
+            }
+        });
+
+        // Search functionality
+        $('#search-input').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            $('.command-item').each(function() {
+                const itemText = $(this).text().toLowerCase();
+                if (itemText.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            // Remove HTML tags and decode entities
+            const cleanText = text.replace(/<br>/g, '\n').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#10;/g, '\n');
+            
+            navigator.clipboard.writeText(cleanText).then(function() {
+                showCopyToast();
+            }).catch(function() {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = cleanText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyToast();
+            });
+        }
+
+        // Show copy success toast
+        function showCopyToast() {
+            const toast = $('#copy-toast');
+            toast.removeClass('translate-x-full').addClass('translate-x-0');
+            setTimeout(() => {
+                toast.removeClass('translate-x-0').addClass('translate-x-full');
+            }, 2000);
+        }
+
+        // Copy button click handlers
+        $('.copy-btn').click(function() {
+            const commandText = $(this).data('command');
+            
+            // Handle dynamic commands
+            if (commandText === 'git-clone') {
+                const url = $('#clone-url').val();
+                if (url) {
+                    copyToClipboard(`git clone ${url}`);
+                } else {
+                    copyToClipboard('git clone <repository-url>');
+                }
+            } else if (commandText === 'git-commit') {
+                const message = $('#commit-message').val();
+                if (message) {
+                    copyToClipboard(`git commit -m "${message}"`);
+                } else {
+                    copyToClipboard('git commit -m "commit message"');
+                }
+            } else if (commandText === 'git-branch') {
+                const name = $('#branch-name').val();
+                if (name) {
+                    copyToClipboard(`git branch ${name}`);
+                } else {
+                    copyToClipboard('git branch <branch-name>');
+                }
+            } else if (commandText === 'git-checkout') {
+                const name = $('#checkout-branch').val();
+                if (name) {
+                    copyToClipboard(`git checkout ${name}`);
+                } else {
+                    copyToClipboard('git checkout <branch-name>');
+                }
+            } else if (commandText === 'git-checkout-new') {
+                const name = $('#checkout-new-branch').val();
+                if (name) {
+                    copyToClipboard(`git checkout -b ${name}`);
+                } else {
+                    copyToClipboard('git checkout -b <branch-name>');
+                }
+            } else if (commandText === 'git-merge') {
+                const name = $('#merge-branch').val();
+                if (name) {
+                    copyToClipboard(`git merge ${name}`);
+                } else {
+                    copyToClipboard('git merge <branch-name>');
+                }
+            } else if (commandText === 'git-delete-branch') {
+                const name = $('#delete-branch').val();
+                if (name) {
+                    copyToClipboard(`git branch -d ${name}\ngit branch -D ${name}`);
+                } else {
+                    copyToClipboard('git branch -d <branch-name>\ngit branch -D <branch-name>');
+                }
+            } else if (commandText === 'git-remote-add') {
+                const name = $('#remote-name').val();
+                const url = $('#remote-url').val();
+                if (name && url) {
+                    copyToClipboard(`git remote add ${name} ${url}`);
+                } else {
+                    copyToClipboard('git remote add <name> <url>');
+                }
+            } else if (commandText === 'git-push') {
+                const remote = $('#push-remote').val();
+                const branch = $('#push-branch').val();
+                if (remote && branch) {
+                    copyToClipboard(`git push ${remote} ${branch}`);
+                } else {
+                    copyToClipboard('git push <remote> <branch>');
+                }
+            } else if (commandText === 'git-tag') {
+                const name = $('#tag-name').val();
+                if (name) {
+                    copyToClipboard(`git tag ${name}\ngit push origin ${name}`);
+                } else {
+                    copyToClipboard('git tag <tag-name>\ngit push origin <tag-name>');
+                }
+            } else {
+                copyToClipboard(commandText);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防火墙命令 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="#snippets" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="#about" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center mb-8">
+                <a href="commands.html" class="text-gray-400 hover:text-cyber-400 transition-colors mr-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </a>
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <span class="text-red-400">防火墙</span>命令
+                    </h1>
+                    <p class="text-xl text-gray-300">
+                        管理Linux系统防火墙，支持Ubuntu、CentOS、Debian等主流发行版
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OS Selection -->
+    <section class="py-8 bg-gray-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gray-700 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-white mb-4">选择操作系统</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button class="os-btn bg-orange-600 hover:bg-orange-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-os="ubuntu">
+                        Ubuntu
+                    </button>
+                    <button class="os-btn bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-os="centos">
+                        CentOS
+                    </button>
+                    <button class="os-btn bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-os="rhel">
+                        RHEL
+                    </button>
+                    <button class="os-btn bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-os="debian">
+                        Debian
+                    </button>
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="text-gray-400">当前选择: </span>
+                    <span id="selected-os" class="text-orange-400 font-semibold">Ubuntu (默认)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Firewall Commands Section -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- Enable Firewall -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">启动防火墙</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">启用系统防火墙服务</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="enable">
+                                复制
+                            </button>
+                        </div>
+                        <code id="enable-command" class="text-green-400 font-mono text-sm">sudo ufw enable</code>
+                    </div>
+                </div>
+
+                <!-- Disable Firewall -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">关闭防火墙</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">关闭系统防火墙服务</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="disable">
+                                复制
+                            </button>
+                        </div>
+                        <code id="disable-command" class="text-red-400 font-mono text-sm">sudo ufw disable</code>
+                    </div>
+                </div>
+
+                <!-- Check Status -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">查看状态</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">检查防火墙当前状态和规则</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="status">
+                                复制
+                            </button>
+                        </div>
+                        <code id="status-command" class="text-blue-400 font-mono text-sm">sudo ufw status verbose</code>
+                    </div>
+                </div>
+
+                <!-- Reload Firewall -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">重载配置</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">重新加载防火墙配置</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="reload">
+                                复制
+                            </button>
+                        </div>
+                        <code id="reload-command" class="text-yellow-400 font-mono text-sm">sudo ufw reload</code>
+                    </div>
+                </div>
+
+                <!-- Open Port -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700 lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">开放端口</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">开放指定端口或端口范围，支持TCP/UDP协议</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-400 text-sm mb-2">端口号</label>
+                            <input type="text" id="open-port" placeholder="例: 80 或 8000-8010" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-sm mb-2">协议</label>
+                            <select id="open-protocol" 
+                                    class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyber-500">
+                                <option value="tcp">TCP</option>
+                                <option value="udp">UDP</option>
+                                <option value="both">TCP/UDP</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-sm mb-2">来源IP (可选)</label>
+                            <input type="text" id="open-source" placeholder="例: 192.168.1.0/24" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500">
+                        </div>
+                    </div>
+                    
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="open-port">
+                                复制
+                            </button>
+                        </div>
+                        <code id="open-port-command" class="text-purple-400 font-mono text-sm">请输入端口号</code>
+                    </div>
+                </div>
+
+                <!-- Close Port -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700 lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">关闭端口</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">关闭指定端口，删除防火墙规则</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-400 text-sm mb-2">端口号</label>
+                            <input type="text" id="close-port" placeholder="例: 80 或 8000-8010" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-sm mb-2">协议</label>
+                            <select id="close-protocol" 
+                                    class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyber-500">
+                                <option value="tcp">TCP</option>
+                                <option value="udp">UDP</option>
+                                <option value="both">TCP/UDP</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-sm mb-2">来源IP (可选)</label>
+                            <input type="text" id="close-source" placeholder="例: 192.168.1.0/24" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500">
+                        </div>
+                    </div>
+                    
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="close-port">
+                                复制
+                            </button>
+                        </div>
+                        <code id="close-port-command" class="text-orange-400 font-mono text-sm">请输入端口号</code>
+                    </div>
+                </div>
+
+                <!-- List Rules -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">列出规则</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">显示所有防火墙规则列表</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="list-rules">
+                                复制
+                            </button>
+                        </div>
+                        <code id="list-rules-command" class="text-indigo-400 font-mono text-sm">sudo ufw status numbered</code>
+                    </div>
+                </div>
+
+                <!-- Reset Firewall -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-red-700 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">重置防火墙</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">删除所有防火墙规则，恢复默认设置</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="reset">
+                                复制
+                            </button>
+                        </div>
+                        <code id="reset-command" class="text-red-400 font-mono text-sm">sudo ufw --force reset</code>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Copy Success Toast -->
+    <div id="copy-toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            命令已复制到剪贴板！
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentOS = 'ubuntu';
+        
+        // Firewall commands for different OS
+        const firewallCommands = {
+            ubuntu: {
+                enable: 'sudo ufw enable',
+                disable: 'sudo ufw disable',
+                status: 'sudo ufw status verbose',
+                reload: 'sudo ufw reload',
+                listRules: 'sudo ufw status numbered',
+                reset: 'sudo ufw --force reset'
+            },
+            centos: {
+                enable: 'sudo systemctl start firewalld && sudo systemctl enable firewalld',
+                disable: 'sudo systemctl stop firewalld && sudo systemctl disable firewalld',
+                status: 'sudo firewall-cmd --state && sudo firewall-cmd --list-all',
+                reload: 'sudo firewall-cmd --reload',
+                listRules: 'sudo firewall-cmd --list-all-zones',
+                reset: 'sudo firewall-cmd --complete-reload'
+            },
+            rhel: {
+                enable: 'sudo systemctl start firewalld && sudo systemctl enable firewalld',
+                disable: 'sudo systemctl stop firewalld && sudo systemctl disable firewalld',
+                status: 'sudo firewall-cmd --state && sudo firewall-cmd --list-all',
+                reload: 'sudo firewall-cmd --reload',
+                listRules: 'sudo firewall-cmd --list-all-zones',
+                reset: 'sudo firewall-cmd --complete-reload'
+            },
+            debian: {
+                enable: 'sudo ufw enable',
+                disable: 'sudo ufw disable',
+                status: 'sudo ufw status verbose',
+                reload: 'sudo ufw reload',
+                listRules: 'sudo ufw status numbered',
+                reset: 'sudo ufw --force reset'
+            }
+        };
+
+        // OS selection
+        $('.os-btn').click(function() {
+            $('.os-btn').removeClass('bg-orange-600 bg-red-600 bg-purple-600').addClass('hover:bg-orange-700 hover:bg-red-700 hover:bg-purple-700');
+            
+            const os = $(this).data('os');
+            currentOS = os;
+            
+            // Update selected OS display
+            const osNames = {
+                ubuntu: 'Ubuntu',
+                centos: 'CentOS',
+                rhel: 'RHEL',
+                debian: 'Debian'
+            };
+            $('#selected-os').text(osNames[os]);
+            
+            // Highlight selected button
+            if (os === 'ubuntu') {
+                $(this).removeClass('hover:bg-orange-700').addClass('bg-orange-600');
+            } else if (os === 'centos' || os === 'rhel') {
+                $(this).removeClass('hover:bg-red-700').addClass('bg-red-600');
+            } else if (os === 'debian') {
+                $(this).removeClass('hover:bg-purple-700').addClass('bg-purple-600');
+            }
+            
+            updateAllCommands();
+        });
+
+        // Generate port commands
+        function generatePortCommand(action, port, protocol, source) {
+            if (!port) return '请输入端口号';
+            
+            let command = '';
+            const isRange = port.includes('-');
+            
+            if (currentOS === 'ubuntu' || currentOS === 'debian') {
+                if (action === 'open') {
+                    if (protocol === 'both') {
+                        command = `sudo ufw allow ${port}`;
+                    } else {
+                        command = `sudo ufw allow ${port}/${protocol}`;
+                    }
+                    if (source) {
+                        command += ` from ${source}`;
+                    }
+                } else if (action === 'close') {
+                    if (protocol === 'both') {
+                        command = `sudo ufw deny ${port}`;
+                    } else {
+                        command = `sudo ufw deny ${port}/${protocol}`;
+                    }
+                    if (source) {
+                        command += ` from ${source}`;
+                    }
+                }
+            } else if (currentOS === 'centos' || currentOS === 'rhel') {
+                if (action === 'open') {
+                    if (protocol === 'both') {
+                        command = `sudo firewall-cmd --permanent --add-port=${port}/tcp && sudo firewall-cmd --permanent --add-port=${port}/udp && sudo firewall-cmd --reload`;
+                    } else {
+                        command = `sudo firewall-cmd --permanent --add-port=${port}/${protocol} && sudo firewall-cmd --reload`;
+                    }
+                    if (source) {
+                        command = `sudo firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="${source}" port protocol="${protocol}" port="${port}" accept" && sudo firewall-cmd --reload`;
+                    }
+                } else if (action === 'close') {
+                    if (protocol === 'both') {
+                        command = `sudo firewall-cmd --permanent --remove-port=${port}/tcp && sudo firewall-cmd --permanent --remove-port=${port}/udp && sudo firewall-cmd --reload`;
+                    } else {
+                        command = `sudo firewall-cmd --permanent --remove-port=${port}/${protocol} && sudo firewall-cmd --reload`;
+                    }
+                }
+            }
+            
+            return command;
+        }
+
+        // Update all basic commands
+        function updateAllCommands() {
+            const commands = firewallCommands[currentOS];
+            
+            $('#enable-command').text(commands.enable);
+            $('#disable-command').text(commands.disable);
+            $('#status-command').text(commands.status);
+            $('#reload-command').text(commands.reload);
+            $('#list-rules-command').text(commands.listRules);
+            $('#reset-command').text(commands.reset);
+            
+            updatePortCommands();
+        }
+
+        // Update port commands
+        function updatePortCommands() {
+            const openPort = $('#open-port').val();
+            const openProtocol = $('#open-protocol').val();
+            const openSource = $('#open-source').val();
+            const closePort = $('#close-port').val();
+            const closeProtocol = $('#close-protocol').val();
+            const closeSource = $('#close-source').val();
+            
+            $('#open-port-command').text(generatePortCommand('open', openPort, openProtocol, openSource));
+            $('#close-port-command').text(generatePortCommand('close', closePort, closeProtocol, closeSource));
+        }
+
+        // Input change handlers
+        $('#open-port, #open-protocol, #open-source').on('input change', updatePortCommands);
+        $('#close-port, #close-protocol, #close-source').on('input change', updatePortCommands);
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showCopyToast();
+            }).catch(function() {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyToast();
+            });
+        }
+
+        // Show copy success toast
+        function showCopyToast() {
+            const toast = $('#copy-toast');
+            toast.removeClass('translate-x-full').addClass('translate-x-0');
+            setTimeout(() => {
+                toast.removeClass('translate-x-0').addClass('translate-x-full');
+            }, 2000);
+        }
+
+        // Copy button click handlers
+        $('.copy-btn').click(function() {
+            const commandType = $(this).data('command');
+            let commandText = '';
+            
+            switch(commandType) {
+                case 'enable':
+                    commandText = $('#enable-command').text();
+                    break;
+                case 'disable':
+                    commandText = $('#disable-command').text();
+                    break;
+                case 'status':
+                    commandText = $('#status-command').text();
+                    break;
+                case 'reload':
+                    commandText = $('#reload-command').text();
+                    break;
+                case 'list-rules':
+                    commandText = $('#list-rules-command').text();
+                    break;
+                case 'reset':
+                    commandText = $('#reset-command').text();
+                    break;
+                case 'open-port':
+                    commandText = $('#open-port-command').text();
+                    break;
+                case 'close-port':
+                    commandText = $('#close-port-command').text();
+                    break;
+            }
+            
+            if (commandText && commandText !== '请输入端口号') {
+                copyToClipboard(commandText);
+            }
+        });
+
+        // Initialize with default OS
+        updateAllCommands();
+    </script>
+</body>
+</html>

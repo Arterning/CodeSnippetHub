@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>命令工具 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-cyber-400 font-semibold">命令工具</a>
+                    <a href="#snippets" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="#about" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    命令工具
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    选择你需要的命令类型，快速生成适配不同操作系统的命令
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-8 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative max-w-md mx-auto">
+                <input type="text" id="search-input" placeholder="搜索命令..." 
+                       class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 pl-12 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 focus:ring-2 focus:ring-cyber-500/20 transition-all duration-200">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Command Cards Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="command-cards">
+                
+                <!-- Firewall Commands Card -->
+                <div class="command-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-cyber-500/50 transition-all duration-300 group cursor-pointer" 
+                     data-category="系统管理" onclick="location.href='firewall.html'">
+                    <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">防火墙命令</h3>
+                    <p class="text-gray-300 mb-6">管理防火墙规则，包括开启/关闭防火墙、端口管理、状态查看等操作</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Ubuntu</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">CentOS</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Debian</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-red-400">
+                        sudo ufw enable<br>
+                        sudo firewall-cmd --reload
+                    </div>
+                </div>
+
+                <!-- Proxy Commands Card -->
+                <div class="command-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="网络配置" onclick="location.href='proxy.html'">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m0 18c1.657 0 3-4.03 3-9s-1.343-9-3-9m-9 9a9 9 0 019-9"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">代理设置命令</h3>
+                    <p class="text-gray-300 mb-6">设置系统代理、环境变量代理、应用代理等网络代理配置</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">HTTP代理</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">SOCKS代理</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-green-400">
+                        export http_proxy=<br>
+                        export https_proxy=
+                    </div>
+                </div>
+
+                <!-- Git Commands Card -->
+                <div class="command-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-orange-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="开发工具" onclick="location.href='git.html'">
+                    <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Git 命令</h3>
+                    <p class="text-gray-300 mb-6">Git版本控制常用命令，包括提交、分支管理、远程仓库操作等</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">分支管理</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">远程同步</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-orange-400">
+                        git commit -m "message"<br>
+                        git push origin main
+                    </div>
+                </div>
+
+                <!-- System Service Commands Card -->
+                <div class="command-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="系统管理">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">系统服务管理</h3>
+                    <p class="text-gray-300 mb-6">管理系统服务，包括启动、停止、重启服务以及开机自启设置</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">systemctl</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">service</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-blue-400">
+                        systemctl start nginx<br>
+                        systemctl enable nginx
+                    </div>
+                </div>
+
+                <!-- Docker Commands Card -->
+                <div class="command-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="容器管理">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.186m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186m0 2.715h2.12a.186.186 0 00.184-.185V9.006a.186.186 0 00-.184-.186H8.1a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185M5.17 8.364h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.17a.185.185 0 00-.186.185v1.887c0 .102.084.185.186.186m0 2.715h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186H5.17a.186.186 0 00-.186.186v1.888c0 .102.084.185.186.185M2.257 8.364h2.118a.186.186 0 00.186-.186V6.29a.185.185 0 00-.186-.185H2.257a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186m20.487 2.715H24a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186h-1.256a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-3.426-2.715h2.118a.186.186 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.186.186 0 00-.186.185v1.887c0 .102.084.185.186.186m0 2.715h2.118a.185.185 0 00.186-.185V9.006a.185.185 0 00-.186-.186h-2.118a.186.186 0 00-.186.186v1.888c0 .102.084.185.186.185m-5.228.149c0-.099-.069-.149-.206-.149H8.316c-.206 0-.316.149-.316.149C7.91 11.67 7.910 16.448 8.409 20.16c.498 3.711 1.002 5.264 1.002 5.264.022.264.264.58.498.58h4.351c.234 0 .498-.316.498-.58 0 0 .264-1.553.762-5.264.498-3.712.498-8.49.498-8.896"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Docker 命令</h3>
+                    <p class="text-gray-300 mb-6">Docker容器管理命令，包括镜像构建、容器运行、网络管理等</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">容器管理</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">镜像操作</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-purple-400">
+                        docker run -d -p 80:80<br>
+                        docker build -t myapp .
+                    </div>
+                </div>
+
+                <!-- Network Commands Card -->
+                <div class="command-card bg-gray-800 rounded-xl p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 group cursor-pointer"
+                     data-category="网络配置">
+                    <div class="w-16 h-16 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">网络诊断命令</h3>
+                    <p class="text-gray-300 mb-6">网络连接测试、端口扫描、网络配置查看等网络诊断工具</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">连通性测试</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">端口扫描</span>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-cyan-400">
+                        ping -c 4 google.com<br>
+                        netstat -tlnp
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Search functionality
+        $('#search-input').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            $('.command-card').each(function() {
+                const cardText = $(this).text().toLowerCase();
+                if (cardText.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 50) {
+                $('nav').addClass('bg-opacity-95');
+            } else {
+                $('nav').removeClass('bg-opacity-95');
+            }
+        });
+    </script>
+</body>
+</html>

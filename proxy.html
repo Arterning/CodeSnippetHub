@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代理设置命令 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="#snippets" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="#about" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center mb-8">
+                <a href="commands.html" class="text-gray-400 hover:text-cyber-400 transition-colors mr-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </a>
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <span class="text-green-400">代理设置</span>命令
+                    </h1>
+                    <p class="text-xl text-gray-300">
+                        配置系统代理，支持Linux和Windows平台的HTTP、HTTPS、SOCKS代理设置
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Selection -->
+    <section class="py-8 bg-gray-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gray-700 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-white mb-4">选择操作系统平台</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <button class="platform-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-platform="linux">
+                        <div class="flex items-center justify-center">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.504 0C5.604 0 0.064 5.56 0.064 12.424c0 2.104 0.568 4.080 1.536 5.792L12.504 24l10.904-5.784c0.968-1.712 1.536-3.688 1.536-5.792C24.944 5.56 19.404 0 12.504 0z"/>
+                            </svg>
+                            Linux
+                        </div>
+                    </button>
+                    <button class="platform-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-platform="windows">
+                        <div class="flex items-center justify-center">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-13.051-1.851"/>
+                            </svg>
+                            Windows
+                        </div>
+                    </button>
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="text-gray-400">当前选择: </span>
+                    <span id="selected-platform" class="text-blue-400 font-semibold">Linux (默认)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proxy Configuration Section -->
+    <section class="py-8 bg-gray-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-8">
+                <h2 class="text-xl font-bold text-white mb-6">代理服务器配置</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-2">代理服务器地址</label>
+                        <input type="text" id="proxy-host" placeholder="例: 127.0.0.1 或 proxy.company.com" 
+                               class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-2">端口号</label>
+                        <input type="text" id="proxy-port" placeholder="例: 8080, 1080, 3128" 
+                               class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-2">用户名 (可选)</label>
+                        <input type="text" id="proxy-username" placeholder="代理认证用户名" 
+                               class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-2">密码 (可选)</label>
+                        <input type="password" id="proxy-password" placeholder="代理认证密码" 
+                               class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proxy Commands Section -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- HTTP/HTTPS Proxy -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700 lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">设置 HTTP/HTTPS 代理</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">配置系统环境变量代理，适用于大多数命令行工具和应用程序</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="http-proxy">
+                                复制
+                            </button>
+                        </div>
+                        <div id="http-proxy-command" class="text-green-400 font-mono text-sm">请输入代理服务器地址和端口</div>
+                    </div>
+                </div>
+
+                <!-- SOCKS Proxy -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700 lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">设置 SOCKS 代理</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">配置SOCKS5代理，支持更广泛的网络协议</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="socks-proxy">
+                                复制
+                            </button>
+                        </div>
+                        <div id="socks-proxy-command" class="text-purple-400 font-mono text-sm">请输入代理服务器地址和端口</div>
+                    </div>
+                </div>
+
+                <!-- Git Proxy -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Git 专用代理</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">专门为Git配置代理设置</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="git-proxy">
+                                复制
+                            </button>
+                        </div>
+                        <div id="git-proxy-command" class="text-orange-400 font-mono text-sm">请输入代理服务器地址和端口</div>
+                    </div>
+                </div>
+
+                <!-- npm Proxy -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M0 7.334v8l6.666 3.333v-6.667l6.667-3.333L20 12v-4.666L13.333 4 6.667 7.334 0 7.334zm6.667 0L13.333 4v2.667L6.667 10v-2.666zm6.666 0v2.667L20 12V9.334l-6.667-2.001z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">npm 代理设置</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">为npm包管理器配置代理</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="npm-proxy">
+                                复制
+                            </button>
+                        </div>
+                        <div id="npm-proxy-command" class="text-red-400 font-mono text-sm">请输入代理服务器地址和端口</div>
+                    </div>
+                </div>
+
+                <!-- Clear Proxy -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">清除代理设置</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">移除所有代理配置，恢复直接连接</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="clear-proxy">
+                                复制
+                            </button>
+                        </div>
+                        <div id="clear-proxy-command" class="text-yellow-400 font-mono text-sm">unset http_proxy https_proxy ftp_proxy</div>
+                    </div>
+                </div>
+
+                <!-- Check Proxy -->
+                <div class="command-section bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">检查代理状态</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">查看当前的代理配置</p>
+                    <div class="command-output bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">生成的命令:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-command="check-proxy">
+                                复制
+                            </button>
+                        </div>
+                        <div id="check-proxy-command" class="text-blue-400 font-mono text-sm">echo $http_proxy $https_proxy</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Copy Success Toast -->
+    <div id="copy-toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            命令已复制到剪贴板！
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentPlatform = 'linux';
+        
+        // Platform selection
+        $('.platform-btn').click(function() {
+            $('.platform-btn').removeClass('bg-blue-600 bg-blue-500').addClass('hover:bg-blue-700 hover:bg-blue-600');
+            
+            const platform = $(this).data('platform');
+            currentPlatform = platform;
+            
+            // Update selected platform display
+            const platformNames = {
+                linux: 'Linux',
+                windows: 'Windows'
+            };
+            $('#selected-platform').text(platformNames[platform]);
+            
+            // Highlight selected button
+            if (platform === 'linux') {
+                $(this).removeClass('hover:bg-blue-700').addClass('bg-blue-600');
+            } else if (platform === 'windows') {
+                $(this).removeClass('hover:bg-blue-600').addClass('bg-blue-500');
+            }
+            
+            updateAllCommands();
+        });
+
+        // Generate proxy URL
+        function generateProxyUrl(includeAuth = false) {
+            const host = $('#proxy-host').val();
+            const port = $('#proxy-port').val();
+            const username = $('#proxy-username').val();
+            const password = $('#proxy-password').val();
+            
+            if (!host || !port) return null;
+            
+            if (includeAuth && username && password) {
+                return `http://${username}:${password}@${host}:${port}`;
+            } else if (includeAuth && username) {
+                return `http://${username}@${host}:${port}`;
+            } else {
+                return `http://${host}:${port}`;
+            }
+        }
+
+        // Generate commands for different platforms
+        function generateCommands() {
+            const proxyUrl = generateProxyUrl(true);
+            const host = $('#proxy-host').val();
+            const port = $('#proxy-port').val();
+            
+            if (!host || !port) {
+                return {
+                    httpProxy: '请输入代理服务器地址和端口',
+                    socksProxy: '请输入代理服务器地址和端口',
+                    gitProxy: '请输入代理服务器地址和端口',
+                    npmProxy: '请输入代理服务器地址和端口',
+                    clearProxy: currentPlatform === 'linux' ? 'unset http_proxy https_proxy ftp_proxy' : 'set http_proxy=\nset https_proxy=\nset ftp_proxy=',
+                    checkProxy: currentPlatform === 'linux' ? 'echo $http_proxy $https_proxy' : 'echo %http_proxy% %https_proxy%'
+                };
+            }
+
+            if (currentPlatform === 'linux') {
+                return {
+                    httpProxy: `export http_proxy=${proxyUrl}\nexport https_proxy=${proxyUrl}\nexport ftp_proxy=${proxyUrl}`,
+                    socksProxy: `export all_proxy=socks5://${host}:${port}`,
+                    gitProxy: `git config --global http.proxy ${proxyUrl}\ngit config --global https.proxy ${proxyUrl}`,
+                    npmProxy: `npm config set proxy ${proxyUrl}\nnpm config set https-proxy ${proxyUrl}`,
+                    clearProxy: 'unset http_proxy https_proxy ftp_proxy all_proxy',
+                    checkProxy: 'echo "HTTP Proxy: $http_proxy"\necho "HTTPS Proxy: $https_proxy"'
+                };
+            } else {
+                return {
+                    httpProxy: `set http_proxy=${proxyUrl}\nset https_proxy=${proxyUrl}\nset ftp_proxy=${proxyUrl}`,
+                    socksProxy: `set all_proxy=socks5://${host}:${port}`,
+                    gitProxy: `git config --global http.proxy ${proxyUrl}\ngit config --global https.proxy ${proxyUrl}`,
+                    npmProxy: `npm config set proxy ${proxyUrl}\nnpm config set https-proxy ${proxyUrl}`,
+                    clearProxy: 'set http_proxy=\nset https_proxy=\nset ftp_proxy=\nset all_proxy=',
+                    checkProxy: 'echo HTTP Proxy: %http_proxy%\necho HTTPS Proxy: %https_proxy%'
+                };
+            }
+        }
+
+        // Update all commands
+        function updateAllCommands() {
+            const commands = generateCommands();
+            
+            $('#http-proxy-command').html(commands.httpProxy.replace(/\n/g, '<br>'));
+            $('#socks-proxy-command').html(commands.socksProxy.replace(/\n/g, '<br>'));
+            $('#git-proxy-command').html(commands.gitProxy.replace(/\n/g, '<br>'));
+            $('#npm-proxy-command').html(commands.npmProxy.replace(/\n/g, '<br>'));
+            $('#clear-proxy-command').html(commands.clearProxy.replace(/\n/g, '<br>'));
+            $('#check-proxy-command').html(commands.checkProxy.replace(/\n/g, '<br>'));
+        }
+
+        // Input change handlers
+        $('#proxy-host, #proxy-port, #proxy-username, #proxy-password').on('input', updateAllCommands);
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            // Remove HTML tags for copying
+            const cleanText = text.replace(/<br>/g, '\n');
+            
+            navigator.clipboard.writeText(cleanText).then(function() {
+                showCopyToast();
+            }).catch(function() {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = cleanText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyToast();
+            });
+        }
+
+        // Show copy success toast
+        function showCopyToast() {
+            const toast = $('#copy-toast');
+            toast.removeClass('translate-x-full').addClass('translate-x-0');
+            setTimeout(() => {
+                toast.removeClass('translate-x-0').addClass('translate-x-full');
+            }, 2000);
+        }
+
+        // Copy button click handlers
+        $('.copy-btn').click(function() {
+            const commandType = $(this).data('command');
+            let commandText = '';
+            
+            switch(commandType) {
+                case 'http-proxy':
+                    commandText = $('#http-proxy-command').html();
+                    break;
+                case 'socks-proxy':
+                    commandText = $('#socks-proxy-command').html();
+                    break;
+                case 'git-proxy':
+                    commandText = $('#git-proxy-command').html();
+                    break;
+                case 'npm-proxy':
+                    commandText = $('#npm-proxy-command').html();
+                    break;
+                case 'clear-proxy':
+                    commandText = $('#clear-proxy-command').html();
+                    break;
+                case 'check-proxy':
+                    commandText = $('#check-proxy-command').html();
+                    break;
+            }
+            
+            if (commandText && !commandText.includes('请输入')) {
+                copyToClipboard(commandText);
+            }
+        });
+
+        // Initialize with default platform
+        updateAllCommands();
+    </script>
+</body>
+</html>
