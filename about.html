@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="snippets.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="about.html" class="text-cyber-400 font-semibold">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    关于 <span class="text-cyber-400">CodeSnippetHub</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    提升开发效率，让编程更简单
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white">网站简介</h2>
+                </div>
+                <div class="text-gray-300 space-y-4 leading-relaxed">
+                    <p>
+                        <strong class="text-white">CodeSnippetHub</strong> 是一个专注于提高开发效率的工具平台，旨在为开发者提供最实用的命令生成工具和代码片段库。
+                    </p>
+                    <p>
+                        我们深知在日常开发工作中，开发者经常需要处理重复性的任务：配置系统命令、编写常用代码模式、查找正则表达式等。这些看似简单的任务往往会消耗大量时间，影响开发效率。
+                    </p>
+                    <p>
+                        为了解决这个问题，CodeSnippetHub 应运而生。我们将常用的操作整理成智能化的工具，让你只需要填写几个参数，就能获得完整可用的命令或代码片段。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-gray-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">核心特性</h2>
+                <p class="text-xl text-gray-300">专为开发者设计的实用功能</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Smart Command Generation -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">智能命令生成</h3>
+                    <p class="text-gray-300">支持多种操作系统的命令自动生成，包括防火墙配置、代理设置、Git操作等，告别手动拼接命令的烦恼。</p>
+                </div>
+
+                <!-- Multi-language Support -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">多语言代码片段</h3>
+                    <p class="text-gray-300">提供Python、JavaScript、Java、Go等多种编程语言的代码片段，包括正则表达式、错误处理、网络请求等常用模式。</p>
+                </div>
+
+                <!-- Real-time Testing -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">实时测试验证</h3>
+                    <p class="text-gray-300">正则表达式等工具支持实时测试功能，输入测试数据即可看到匹配结果，确保代码的正确性。</p>
+                </div>
+
+                <!-- One-click Copy -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">一键复制</h3>
+                    <p class="text-gray-300">所有生成的命令和代码片段都支持一键复制到剪贴板，方便直接在项目中使用。</p>
+                </div>
+
+                <!-- Cross-platform -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">跨平台兼容</h3>
+                    <p class="text-gray-300">支持Linux、Windows、macOS等多种操作系统，针对不同平台生成相应的命令格式。</p>
+                </div>
+
+                <!-- Open Source -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                    <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">开源友好</h3>
+                    <p class="text-gray-300">项目基于开源理念，持续更新和完善，欢迎开发者贡献更多实用的工具和代码片段。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">使用统计</h2>
+                <p class="text-xl text-gray-300">感谢每一位开发者的信任与支持</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-cyber-400 mb-2">50+</div>
+                    <div class="text-gray-300">命令模板</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-green-400 mb-2">100+</div>
+                    <div class="text-gray-300">代码片段</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-400 mb-2">6</div>
+                    <div class="text-gray-300">编程语言</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-yellow-400 mb-2">∞</div>
+                    <div class="text-gray-300">可能性</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Help Articles Section -->
+    <section class="py-16 bg-gray-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">帮助文档</h2>
+                <p class="text-xl text-gray-300">实用教程和问题解决方案</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Linux Administration -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-red-500/50 transition-all duration-300 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">系统管理</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>如何重置Linux root密码
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>Ubuntu系统安全加固指南
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>CentOS防火墙配置详解
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>Linux用户权限管理最佳实践
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>系统服务管理完全指南
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Network Configuration -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-green-500/50 transition-all duration-300 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">网络配置</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>代理服务器配置全攻略
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>SSH密钥认证设置教程
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>Nginx反向代理配置指南
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>VPN连接问题解决方案
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>网络故障排查技巧
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Development Tools -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-orange-500/50 transition-all duration-300 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">开发工具</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>Git工作流最佳实践
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>Docker容器化部署指南
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>CI/CD流水线搭建教程
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>数据库性能优化技巧
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>API接口设计规范
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Security -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">安全防护</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>SSL证书配置完全指南
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>服务器安全检查清单
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>密码安全策略制定
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>防止SQL注入攻击
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>Web应用安全测试
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Programming Tips -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">编程技巧</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>正则表达式实战案例
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>Python性能优化技巧
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>JavaScript异步编程详解
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>代码重构实践指南
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>单元测试编写规范
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Troubleshooting -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 group">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">问题解决</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>常见错误码解决方案
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>系统性能问题排查
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>内存泄漏检测与修复
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>数据库连接超时处理
+                        </a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors flex items-center">
+                            <span class="text-xs mr-2">•</span>日志分析与监控
+                        </a></li>
+                    </ul>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-400 mb-4">更多教程文章持续更新中...</p>
+                <div class="bg-gray-900 border border-gray-700 rounded-lg p-4 inline-block">
+                    <p class="text-gray-300 mb-2">📝 想要贡献文章或建议？</p>
+                    <p class="text-gray-400 text-sm">欢迎通过 <a href="mailto:contact@example.com" class="text-cyber-400 hover:text-cyber-300">邮件</a> 与我们联系</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-cyber-500/10 to-purple-500/10 rounded-xl p-8 border border-cyber-500/20">
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold text-white mb-4">联系我们</h2>
+                    <p class="text-gray-300 mb-6">
+                        如果你有任何建议、问题或想要贡献内容，欢迎随时联系我们！
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <a href="mailto:contact@example.com" class="bg-cyber-600 hover:bg-cyber-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            发送邮件
+                        </a>
+                        <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                    <p class="text-gray-300 max-w-md mb-4">提高开发效率的命令和代码片段工具，让编程更简单。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-cyber-400 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-cyber-400 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">功能</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="commands.html" class="hover:text-cyber-400 transition-colors">命令生成</a></li>
+                        <li><a href="snippets.html" class="hover:text-cyber-400 transition-colors">代码片段</a></li>
+                        <li><a href="regex-snippets.html" class="hover:text-cyber-400 transition-colors">正则表达式</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">关于</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="about.html" class="hover:text-cyber-400 transition-colors">关于我们</a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors">使用指南</a></li>
+                        <li><a href="#" class="hover:text-cyber-400 transition-colors">反馈建议</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add scroll effect to navbar
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 50) {
+                $('nav').addClass('bg-opacity-95');
+            } else {
+                $('nav').removeClass('bg-opacity-95');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        $('a[href^="#"]').click(function(e) {
+            e.preventDefault();
+            const target = $($(this).attr('href'));
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 64
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
