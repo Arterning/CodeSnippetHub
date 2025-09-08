@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错误处理代码片段 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="snippets.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="about.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center mb-8">
+                <a href="snippets.html" class="text-gray-400 hover:text-cyber-400 transition-colors mr-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </a>
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <span class="text-red-400">错误处理</span>代码片段
+                    </h1>
+                    <p class="text-xl text-gray-300">
+                        各种编程语言的异常处理、错误捕获和日志记录代码片段
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Language Selection -->
+    <section class="py-8 bg-gray-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gray-700 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-white mb-4">选择编程语言</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <button class="lang-btn bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="python">
+                        Python
+                    </button>
+                    <button class="lang-btn bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="javascript">
+                        JavaScript
+                    </button>
+                    <button class="lang-btn bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="java">
+                        Java
+                    </button>
+                    <button class="lang-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="go">
+                        Go
+                    </button>
+                    <button class="lang-btn bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="php">
+                        PHP
+                    </button>
+                    <button class="lang-btn bg-orange-600 hover:bg-orange-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200" data-lang="csharp">
+                        C#
+                    </button>
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="text-gray-400">当前语言: </span>
+                    <span id="selected-language" class="text-yellow-400 font-semibold">Python (默认)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-6 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative max-w-md mx-auto">
+                <input type="text" id="search-input" placeholder="搜索错误处理代码..." 
+                       class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 pl-12 text-white placeholder-gray-400 focus:outline-none focus:border-cyber-500 focus:ring-2 focus:ring-cyber-500/20 transition-all duration-200">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Error Handling Patterns Section -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- Basic Try-Catch -->
+                <div class="snippet-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">基础异常捕获</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">使用 try-catch 块捕获和处理异常</p>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">代码示例:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-snippet="basic-try-catch">
+                                复制代码
+                            </button>
+                        </div>
+                        <pre id="basic-try-catch" class="text-blue-400 font-mono text-sm overflow-x-auto">try:
+    # 可能出错的代码
+    result = risky_operation()
+    print(result)
+except Exception as e:
+    print(f"发生错误: {e}")
+finally:
+    print("清理资源")</pre>
+                    </div>
+                </div>
+
+                <!-- Specific Exception Handling -->
+                <div class="snippet-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">特定异常处理</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">捕获和处理特定类型的异常</p>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">代码示例:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-snippet="specific-exceptions">
+                                复制代码
+                            </button>
+                        </div>
+                        <pre id="specific-exceptions" class="text-blue-400 font-mono text-sm overflow-x-auto">try:
+    file = open("data.txt", "r")
+    data = file.read()
+    number = int(data)
+    result = 10 / number
+except FileNotFoundError:
+    print("文件未找到")
+except ValueError:
+    print("无效的数值格式")
+except ZeroDivisionError:
+    print("除零错误")
+except Exception as e:
+    print(f"未知错误: {e}")
+finally:
+    if 'file' in locals():
+        file.close()</pre>
+                    </div>
+                </div>
+
+                <!-- Custom Exception -->
+                <div class="snippet-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">自定义异常</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">创建和使用自定义异常类</p>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">代码示例:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-snippet="custom-exception">
+                                复制代码
+                            </button>
+                        </div>
+                        <pre id="custom-exception" class="text-blue-400 font-mono text-sm overflow-x-auto">class ValidationError(Exception):
+    """自定义验证异常"""
+    def __init__(self, message, code=None):
+        self.message = message
+        self.code = code
+        super().__init__(self.message)
+
+def validate_age(age):
+    if age < 0:
+        raise ValidationError("年龄不能为负数", "NEGATIVE_AGE")
+    if age > 150:
+        raise ValidationError("年龄超出合理范围", "AGE_TOO_HIGH")
+
+try:
+    validate_age(-5)
+except ValidationError as e:
+    print(f"验证错误: {e.message} (代码: {e.code})")</pre>
+                    </div>
+                </div>
+
+                <!-- Logging Errors -->
+                <div class="snippet-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">错误日志记录</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">使用日志系统记录错误信息</p>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">代码示例:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-snippet="error-logging">
+                                复制代码
+                            </button>
+                        </div>
+                        <pre id="error-logging" class="text-blue-400 font-mono text-sm overflow-x-auto">import logging
+
+# 配置日志
+logging.basicConfig(
+    level=logging.ERROR,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('error.log'),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+def risky_function():
+    try:
+        # 危险操作
+        result = 10 / 0
+        return result
+    except Exception as e:
+        logger.error(f"函数执行失败: {e}", exc_info=True)
+        raise  # 重新抛出异常</pre>
+                    </div>
+                </div>
+
+                <!-- Context Manager -->
+                <div class="snippet-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">资源管理</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">使用上下文管理器安全处理资源</p>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">代码示例:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-snippet="context-manager">
+                                复制代码
+                            </button>
+                        </div>
+                        <pre id="context-manager" class="text-blue-400 font-mono text-sm overflow-x-auto">from contextlib import contextmanager
+
+@contextmanager
+def database_connection():
+    connection = None
+    try:
+        connection = create_connection()
+        print("数据库连接已建立")
+        yield connection
+    except Exception as e:
+        print(f"数据库操作失败: {e}")
+        if connection:
+            connection.rollback()
+        raise
+    finally:
+        if connection:
+            connection.close()
+            print("数据库连接已关闭")
+
+# 使用上下文管理器
+try:
+    with database_connection() as conn:
+        # 数据库操作
+        conn.execute("SELECT * FROM users")
+except Exception as e:
+    print(f"处理数据库错误: {e}")</pre>
+                    </div>
+                </div>
+
+                <!-- Retry Pattern -->
+                <div class="snippet-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">重试机制</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">实现自动重试失败的操作</p>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">代码示例:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-snippet="retry-pattern">
+                                复制代码
+                            </button>
+                        </div>
+                        <pre id="retry-pattern" class="text-blue-400 font-mono text-sm overflow-x-auto">import time
+import random
+
+def retry(max_attempts=3, delay=1, backoff=2):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            attempts = 0
+            current_delay = delay
+            
+            while attempts < max_attempts:
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    attempts += 1
+                    if attempts >= max_attempts:
+                        print(f"重试 {max_attempts} 次后仍然失败: {e}")
+                        raise
+                    
+                    print(f"第 {attempts} 次尝试失败: {e}")
+                    print(f"等待 {current_delay} 秒后重试...")
+                    time.sleep(current_delay)
+                    current_delay *= backoff
+            
+        return wrapper
+    return decorator
+
+@retry(max_attempts=3, delay=1, backoff=2)
+def unreliable_api_call():
+    if random.random() < 0.7:  # 70% 失败率
+        raise Exception("API 调用失败")
+    return "成功!"</pre>
+                    </div>
+                </div>
+
+                <!-- Error Recovery -->
+                <div class="snippet-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">错误恢复</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">实现错误恢复和降级策略</p>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">代码示例:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-snippet="error-recovery">
+                                复制代码
+                            </button>
+                        </div>
+                        <pre id="error-recovery" class="text-blue-400 font-mono text-sm overflow-x-auto">def get_user_data(user_id):
+    """获取用户数据，支持多级降级策略"""
+    
+    # 第一级：尝试从数据库获取
+    try:
+        return get_from_database(user_id)
+    except DatabaseError as e:
+        print(f"数据库访问失败: {e}")
+    
+    # 第二级：尝试从缓存获取
+    try:
+        return get_from_cache(user_id)
+    except CacheError as e:
+        print(f"缓存访问失败: {e}")
+    
+    # 第三级：返回默认数据
+    try:
+        return get_default_user_data(user_id)
+    except Exception as e:
+        print(f"获取默认数据失败: {e}")
+    
+    # 最后降级：返回空数据
+    return {
+        "id": user_id,
+        "name": "未知用户",
+        "error": "数据不可用"
+    }</pre>
+                    </div>
+                </div>
+
+                <!-- Circuit Breaker -->
+                <div class="snippet-item bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-pink-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">熔断器模式</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">实现熔断器模式防止级联故障</p>
+                    <div class="code-section bg-gray-900 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">代码示例:</span>
+                            <button class="copy-btn bg-cyber-600 hover:bg-cyber-700 text-white px-3 py-1 rounded text-sm transition-colors" data-snippet="circuit-breaker">
+                                复制代码
+                            </button>
+                        </div>
+                        <pre id="circuit-breaker" class="text-blue-400 font-mono text-sm overflow-x-auto">import time
+from enum import Enum
+
+class CircuitState(Enum):
+    CLOSED = 1    # 正常状态
+    OPEN = 2      # 熔断状态
+    HALF_OPEN = 3 # 半开状态
+
+class CircuitBreaker:
+    def __init__(self, failure_threshold=5, timeout=60):
+        self.failure_threshold = failure_threshold
+        self.timeout = timeout
+        self.failure_count = 0
+        self.last_failure_time = None
+        self.state = CircuitState.CLOSED
+    
+    def call(self, func, *args, **kwargs):
+        if self.state == CircuitState.OPEN:
+            if time.time() - self.last_failure_time > self.timeout:
+                self.state = CircuitState.HALF_OPEN
+            else:
+                raise Exception("熔断器开启，服务不可用")
+        
+        try:
+            result = func(*args, **kwargs)
+            self.reset()
+            return result
+        except Exception as e:
+            self.record_failure()
+            raise
+    
+    def record_failure(self):
+        self.failure_count += 1
+        self.last_failure_time = time.time()
+        
+        if self.failure_count >= self.failure_threshold:
+            self.state = CircuitState.OPEN
+            print(f"熔断器开启，失败次数: {self.failure_count}")
+    
+    def reset(self):
+        self.failure_count = 0
+        self.state = CircuitState.CLOSED</pre>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Copy Success Toast -->
+    <div id="copy-toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            代码已复制到剪贴板！
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentLanguage = 'python';
+        
+        // Error handling code snippets for different languages
+        const codeSnippets = {
+            'basic-try-catch': {
+                python: `try:
+    # 可能出错的代码
+    result = risky_operation()
+    print(result)
+except Exception as e:
+    import traceback
+    traceback.print_exc()
+    print(f"发生错误: {e}")
+finally:
+    print("清理资源")`,
+                javascript: `try {
+    // 可能出错的代码
+    const result = riskyOperation();
+    console.log(result);
+} catch (error) {
+    console.log(\`发生错误: \${error.message}\`);
+} finally {
+    console.log("清理资源");
+}`,
+                java: `try {
+    // 可能出错的代码
+    String result = riskyOperation();
+    System.out.println(result);
+} catch (Exception e) {
+    System.out.println("发生错误: " + e.getMessage());
+} finally {
+    System.out.println("清理资源");
+}`,
+                go: `func handleError() {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Println("发生错误:", r)
+        }
+        fmt.Println("清理资源")
+    }()
+    
+    // 可能出错的代码
+    result := riskyOperation()
+    fmt.Println(result)
+}`,
+                php: `<?php
+try {
+    // 可能出错的代码
+    $result = riskyOperation();
+    echo $result;
+} catch (Exception $e) {
+    echo "发生错误: " . $e->getMessage();
+} finally {
+    echo "清理资源";
+}
+?>`,
+                csharp: `try
+{
+    // 可能出错的代码
+    var result = RiskyOperation();
+    Console.WriteLine(result);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"发生错误: {ex.Message}");
+}
+finally
+{
+    Console.WriteLine("清理资源");
+}`
+            },
+            'specific-exceptions': {
+                python: `try:
+    file = open("data.txt", "r")
+    data = file.read()
+    number = int(data)
+    result = 10 / number
+except FileNotFoundError:
+    print("文件未找到")
+except ValueError:
+    print("无效的数值格式")
+except ZeroDivisionError:
+    print("除零错误")
+except Exception as e:
+    print(f"未知错误: {e}")
+finally:
+    if 'file' in locals():
+        file.close()`,
+                javascript: `try {
+    const fs = require('fs');
+    const data = fs.readFileSync('data.txt', 'utf8');
+    const number = parseInt(data);
+    const result = 10 / number;
+} catch (error) {
+    if (error.code === 'ENOENT') {
+        console.log("文件未找到");
+    } else if (error.name === 'TypeError') {
+        console.log("类型错误");
+    } else if (isNaN(number)) {
+        console.log("无效的数值格式");
+    } else {
+        console.log(\`未知错误: \${error.message}\`);
+    }
+}`,
+                java: `try (FileReader file = new FileReader("data.txt");
+     BufferedReader reader = new BufferedReader(file)) {
+    String data = reader.readLine();
+    int number = Integer.parseInt(data);
+    int result = 10 / number;
+} catch (FileNotFoundException e) {
+    System.out.println("文件未找到");
+} catch (NumberFormatException e) {
+    System.out.println("无效的数值格式");
+} catch (ArithmeticException e) {
+    System.out.println("算术错误");
+} catch (IOException e) {
+    System.out.println("IO错误: " + e.getMessage());
+}`,
+                go: `func specificExceptions() error {
+    file, err := os.Open("data.txt")
+    if err != nil {
+        if os.IsNotExist(err) {
+            fmt.Println("文件未找到")
+        } else {
+            fmt.Printf("打开文件错误: %v\\n", err)
+        }
+        return err
+    }
+    defer file.Close()
+    
+    scanner := bufio.NewScanner(file)
+    if scanner.Scan() {
+        data := scanner.Text()
+        number, err := strconv.Atoi(data)
+        if err != nil {
+            fmt.Println("无效的数值格式")
+            return err
+        }
+        
+        if number == 0 {
+            fmt.Println("除零错误")
+            return fmt.Errorf("division by zero")
+        }
+        
+        result := 10 / number
+        fmt.Printf("结果: %d\\n", result)
+    }
+    return nil
+}`,
+                php: `<?php
+try {
+    $data = file_get_contents("data.txt");
+    if ($data === false) {
+        throw new Exception("文件读取失败");
+    }
+    
+    $number = intval($data);
+    if ($number == 0 && $data !== "0") {
+        throw new InvalidArgumentException("无效的数值格式");
+    }
+    
+    if ($number == 0) {
+        throw new DivisionByZeroError("除零错误");
+    }
+    
+    $result = 10 / $number;
+} catch (InvalidArgumentException $e) {
+    echo "参数错误: " . $e->getMessage();
+} catch (DivisionByZeroError $e) {
+    echo "除零错误";
+} catch (Exception $e) {
+    echo "未知错误: " . $e->getMessage();
+}
+?>`,
+                csharp: `try
+{
+    string data = File.ReadAllText("data.txt");
+    int number = int.Parse(data);
+    int result = 10 / number;
+}
+catch (FileNotFoundException)
+{
+    Console.WriteLine("文件未找到");
+}
+catch (FormatException)
+{
+    Console.WriteLine("无效的数值格式");
+}
+catch (DivideByZeroException)
+{
+    Console.WriteLine("除零错误");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"未知错误: {ex.Message}");
+}`
+            },
+            'custom-exception': {
+                python: `class ValidationError(Exception):
+    """自定义验证异常"""
+    def __init__(self, message, code=None):
+        self.message = message
+        self.code = code
+        super().__init__(self.message)
+
+def validate_age(age):
+    if age < 0:
+        raise ValidationError("年龄不能为负数", "NEGATIVE_AGE")
+    if age > 150:
+        raise ValidationError("年龄超出合理范围", "AGE_TOO_HIGH")
+
+try:
+    validate_age(-5)
+except ValidationError as e:
+    print(f"验证错误: {e.message} (代码: {e.code})")`,
+                javascript: `class ValidationError extends Error {
+    constructor(message, code = null) {
+        super(message);
+        this.name = "ValidationError";
+        this.code = code;
+    }
+}
+
+function validateAge(age) {
+    if (age < 0) {
+        throw new ValidationError("年龄不能为负数", "NEGATIVE_AGE");
+    }
+    if (age > 150) {
+        throw new ValidationError("年龄超出合理范围", "AGE_TOO_HIGH");
+    }
+}
+
+try {
+    validateAge(-5);
+} catch (error) {
+    if (error instanceof ValidationError) {
+        console.log(\`验证错误: \${error.message} (代码: \${error.code})\`);
+    } else {
+        throw error;
+    }
+}`,
+                java: `class ValidationException extends Exception {
+    private String code;
+    
+    public ValidationException(String message, String code) {
+        super(message);
+        this.code = code;
+    }
+    
+    public String getCode() { return code; }
+}
+
+public class Validator {
+    public static void validateAge(int age) throws ValidationException {
+        if (age < 0) {
+            throw new ValidationException("年龄不能为负数", "NEGATIVE_AGE");
+        }
+        if (age > 150) {
+            throw new ValidationException("年龄超出合理范围", "AGE_TOO_HIGH");
+        }
+    }
+    
+    public static void main(String[] args) {
+        try {
+            validateAge(-5);
+        } catch (ValidationException e) {
+            System.out.println("验证错误: " + e.getMessage() + " (代码: " + e.getCode() + ")");
+        }
+    }
+}`,
+                go: `type ValidationError struct {
+    Message string
+    Code    string
+}
+
+func (e ValidationError) Error() string {
+    return e.Message
+}
+
+func validateAge(age int) error {
+    if age < 0 {
+        return ValidationError{
+            Message: "年龄不能为负数",
+            Code:    "NEGATIVE_AGE",
+        }
+    }
+    if age > 150 {
+        return ValidationError{
+            Message: "年龄超出合理范围",
+            Code:    "AGE_TOO_HIGH",
+        }
+    }
+    return nil
+}
+
+func main() {
+    if err := validateAge(-5); err != nil {
+        if ve, ok := err.(ValidationError); ok {
+            fmt.Printf("验证错误: %s (代码: %s)\\n", ve.Message, ve.Code)
+        } else {
+            fmt.Printf("其他错误: %v\\n", err)
+        }
+    }
+}`,
+                php: `<?php
+class ValidationException extends Exception {
+    private $code;
+    
+    public function __construct($message, $code = null) {
+        parent::__construct($message);
+        $this->code = $code;
+    }
+    
+    public function getCode() {
+        return $this->code;
+    }
+}
+
+function validateAge($age) {
+    if ($age < 0) {
+        throw new ValidationException("年龄不能为负数", "NEGATIVE_AGE");
+    }
+    if ($age > 150) {
+        throw new ValidationException("年龄超出合理范围", "AGE_TOO_HIGH");
+    }
+}
+
+try {
+    validateAge(-5);
+} catch (ValidationException $e) {
+    echo "验证错误: " . $e->getMessage() . " (代码: " . $e->getCode() . ")";
+}
+?>`,
+                csharp: `public class ValidationException : Exception
+{
+    public string Code { get; }
+    
+    public ValidationException(string message, string code = null) 
+        : base(message)
+    {
+        Code = code;
+    }
+}
+
+public static void ValidateAge(int age)
+{
+    if (age < 0)
+    {
+        throw new ValidationException("年龄不能为负数", "NEGATIVE_AGE");
+    }
+    if (age > 150)
+    {
+        throw new ValidationException("年龄超出合理范围", "AGE_TOO_HIGH");
+    }
+}
+
+try
+{
+    ValidateAge(-5);
+}
+catch (ValidationException ex)
+{
+    Console.WriteLine($"验证错误: {ex.Message} (代码: {ex.Code})");
+}`
+            },
+            'error-logging': {
+                python: `import logging
+
+# 配置日志
+logging.basicConfig(
+    level=logging.ERROR,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('error.log'),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+def risky_function():
+    try:
+        # 危险操作
+        result = 10 / 0
+        return result
+    except Exception as e:
+        logger.error(f"函数执行失败: {e}", exc_info=True)
+        raise  # 重新抛出异常`,
+                javascript: `const winston = require('winston');
+
+const logger = winston.createLogger({
+    level: 'error',
+    format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.errors({ stack: true }),
+        winston.format.json()
+    ),
+    transports: [
+        new winston.transports.File({ filename: 'error.log' }),
+        new winston.transports.Console()
+    ]
+});
+
+function riskyFunction() {
+    try {
+        // 危险操作
+        const result = 10 / 0;
+        return result;
+    } catch (error) {
+        logger.error('函数执行失败', { error: error.message, stack: error.stack });
+        throw error; // 重新抛出异常
+    }
+}`,
+                java: `import java.util.logging.*;
+import java.io.IOException;
+
+public class ErrorLogging {
+    private static final Logger logger = Logger.getLogger(ErrorLogging.class.getName());
+    
+    static {
+        try {
+            FileHandler fileHandler = new FileHandler("error.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+            logger.setLevel(Level.SEVERE);
+        } catch (IOException e) {
+            logger.severe("无法初始化文件日志: " + e.getMessage());
+        }
+    }
+    
+    public static int riskyFunction() throws Exception {
+        try {
+            // 危险操作
+            int result = 10 / 0;
+            return result;
+        } catch (Exception e) {
+            logger.severe("函数执行失败: " + e.getMessage());
+            throw e; // 重新抛出异常
+        }
+    }
+}`,
+                go: `import (
+    "log"
+    "os"
+)
+
+var errorLogger *log.Logger
+
+func init() {
+    file, err := os.OpenFile("error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+    if err != nil {
+        log.Fatalf("无法打开日志文件: %v", err)
+    }
+    
+    errorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
+}
+
+func riskyFunction() (int, error) {
+    defer func() {
+        if r := recover(); r != nil {
+            errorLogger.Printf("函数执行失败: %v", r)
+        }
+    }()
+    
+    // 危险操作
+    result := 10 / 0
+    return result, nil
+}`,
+                php: `<?php
+// 配置错误日志
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log');
+
+function riskyFunction() {
+    try {
+        // 危险操作
+        $result = 10 / 0;
+        return $result;
+    } catch (Exception $e) {
+        error_log("函数执行失败: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
+        throw $e; // 重新抛出异常
+    }
+}
+
+// 自定义错误处理函数
+function customErrorHandler($errno, $errstr, $errfile, $errline) {
+    $errorMessage = "错误 [$errno]: $errstr - $errfile:$errline";
+    error_log($errorMessage);
+}
+
+set_error_handler('customErrorHandler');
+?>`,
+                csharp: `using System;
+using Microsoft.Extensions.Logging;
+
+public class ErrorHandling
+{
+    private readonly ILogger<ErrorHandling> _logger;
+    
+    public ErrorHandling(ILogger<ErrorHandling> logger)
+    {
+        _logger = logger;
+    }
+    
+    public int RiskyFunction()
+    {
+        try
+        {
+            // 危险操作
+            int result = 10 / 0;
+            return result;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "函数执行失败");
+            throw; // 重新抛出异常
+        }
+    }
+}
+
+// 在 Program.cs 或 Startup.cs 中配置日志
+// services.AddLogging(builder =>
+// {
+//     builder.AddConsole();
+//     builder.AddFile("error.log");
+// });`
+            },
+            'context-manager': {
+                python: `from contextlib import contextmanager
+
+@contextmanager
+def database_connection():
+    connection = None
+    try:
+        connection = create_connection()
+        print("数据库连接已建立")
+        yield connection
+    except Exception as e:
+        print(f"数据库操作失败: {e}")
+        if connection:
+            connection.rollback()
+        raise
+    finally:
+        if connection:
+            connection.close()
+            print("数据库连接已关闭")
+
+# 使用上下文管理器
+try:
+    with database_connection() as conn:
+        # 数据库操作
+        conn.execute("SELECT * FROM users")
+except Exception as e:
+    print(f"处理数据库错误: {e}")`,
+                javascript: `class DatabaseConnection {
+    constructor() {
+        this.connection = null;
+    }
+    
+    async connect() {
+        this.connection = await createConnection();
+        console.log("数据库连接已建立");
+        return this;
+    }
+    
+    async close() {
+        if (this.connection) {
+            await this.connection.close();
+            console.log("数据库连接已关闭");
+        }
+    }
+    
+    async execute(query) {
+        if (!this.connection) {
+            throw new Error("连接未建立");
+        }
+        return await this.connection.execute(query);
+    }
+}
+
+// 使用 try-finally 模拟上下文管理器
+async function withDatabaseConnection(callback) {
+    const db = new DatabaseConnection();
+    try {
+        await db.connect();
+        return await callback(db);
+    } catch (error) {
+        console.log(\`数据库操作失败: \${error.message}\`);
+        throw error;
+    } finally {
+        await db.close();
+    }
+}
+
+// 使用示例
+try {
+    await withDatabaseConnection(async (conn) => {
+        return await conn.execute("SELECT * FROM users");
+    });
+} catch (error) {
+    console.log(\`处理数据库错误: \${error.message}\`);
+}`,
+                java: `public class DatabaseConnection implements AutoCloseable {
+    private Connection connection;
+    
+    public DatabaseConnection() throws SQLException {
+        this.connection = createConnection();
+        System.out.println("数据库连接已建立");
+    }
+    
+    public ResultSet execute(String query) throws SQLException {
+        return connection.createStatement().executeQuery(query);
+    }
+    
+    @Override
+    public void close() throws SQLException {
+        if (connection != null) {
+            connection.close();
+            System.out.println("数据库连接已关闭");
+        }
+    }
+}
+
+// 使用 try-with-resources
+public class DatabaseExample {
+    public void queryUsers() {
+        try (DatabaseConnection conn = new DatabaseConnection()) {
+            ResultSet results = conn.execute("SELECT * FROM users");
+            // 处理结果
+        } catch (SQLException e) {
+            System.out.println("数据库操作失败: " + e.getMessage());
+        }
+    }
+}`,
+                go: `type DatabaseConnection struct {
+    conn *sql.DB
+}
+
+func NewDatabaseConnection() (*DatabaseConnection, error) {
+    conn, err := sql.Open("driver", "connection-string")
+    if err != nil {
+        return nil, err
+    }
+    
+    fmt.Println("数据库连接已建立")
+    return &DatabaseConnection{conn: conn}, nil
+}
+
+func (db *DatabaseConnection) Close() error {
+    if db.conn != nil {
+        fmt.Println("数据库连接已关闭")
+        return db.conn.Close()
+    }
+    return nil
+}
+
+func (db *DatabaseConnection) Execute(query string) (*sql.Rows, error) {
+    return db.conn.Query(query)
+}
+
+// 使用 defer 确保资源清理
+func queryUsers() error {
+    db, err := NewDatabaseConnection()
+    if err != nil {
+        return fmt.Errorf("连接数据库失败: %w", err)
+    }
+    defer func() {
+        if err := db.Close(); err != nil {
+            fmt.Printf("关闭数据库连接失败: %v\\n", err)
+        }
+    }()
+    
+    rows, err := db.Execute("SELECT * FROM users")
+    if err != nil {
+        return fmt.Errorf("查询失败: %w", err)
+    }
+    defer rows.Close()
+    
+    // 处理查询结果
+    return nil
+}`,
+                php: `<?php
+class DatabaseConnection {
+    private $connection;
+    
+    public function __construct() {
+        $this->connection = new PDO("mysql:host=localhost;dbname=test", $user, $pass);
+        echo "数据库连接已建立\\n";
+    }
+    
+    public function execute($query) {
+        return $this->connection->query($query);
+    }
+    
+    public function __destruct() {
+        if ($this->connection) {
+            $this->connection = null;
+            echo "数据库连接已关闭\\n";
+        }
+    }
+}
+
+function withDatabaseConnection($callback) {
+    $conn = null;
+    try {
+        $conn = new DatabaseConnection();
+        return $callback($conn);
+    } catch (Exception $e) {
+        echo "数据库操作失败: " . $e->getMessage() . "\\n";
+        throw $e;
+    } finally {
+        // PHP 会自动调用 __destruct
+    }
+}
+
+// 使用示例
+try {
+    withDatabaseConnection(function($conn) {
+        return $conn->execute("SELECT * FROM users");
+    });
+} catch (Exception $e) {
+    echo "处理数据库错误: " . $e->getMessage();
+}
+?>`,
+                csharp: `public class DatabaseConnection : IDisposable
+{
+    private SqlConnection connection;
+    private bool disposed = false;
+    
+    public DatabaseConnection(string connectionString)
+    {
+        connection = new SqlConnection(connectionString);
+        connection.Open();
+        Console.WriteLine("数据库连接已建立");
+    }
+    
+    public SqlDataReader Execute(string query)
+    {
+        using var command = new SqlCommand(query, connection);
+        return command.ExecuteReader();
+    }
+    
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing && connection != null)
+            {
+                connection.Close();
+                connection.Dispose();
+                Console.WriteLine("数据库连接已关闭");
+            }
+            disposed = true;
+        }
+    }
+}
+
+// 使用 using 语句
+public void QueryUsers()
+{
+    try
+    {
+        using var conn = new DatabaseConnection("connection-string");
+        using var reader = conn.Execute("SELECT * FROM users");
+        // 处理结果
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"数据库操作失败: {ex.Message}");
+    }
+}`
+            },
+            'retry-pattern': {
+                python: `import time
+import random
+
+def retry(max_attempts=3, delay=1, backoff=2):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            attempts = 0
+            current_delay = delay
+            
+            while attempts < max_attempts:
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    attempts += 1
+                    if attempts >= max_attempts:
+                        print(f"重试 {max_attempts} 次后仍然失败: {e}")
+                        raise
+                    
+                    print(f"第 {attempts} 次尝试失败: {e}")
+                    print(f"等待 {current_delay} 秒后重试...")
+                    time.sleep(current_delay)
+                    current_delay *= backoff
+            
+        return wrapper
+    return decorator
+
+@retry(max_attempts=3, delay=1, backoff=2)
+def unreliable_api_call():
+    if random.random() < 0.7:  # 70% 失败率
+        raise Exception("API 调用失败")
+    return "成功!"`,
+                javascript: `function retry(maxAttempts = 3, delay = 1000, backoff = 2) {
+    return function(func) {
+        return async function(...args) {
+            let attempts = 0;
+            let currentDelay = delay;
+            
+            while (attempts < maxAttempts) {
+                try {
+                    return await func.apply(this, args);
+                } catch (error) {
+                    attempts++;
+                    if (attempts >= maxAttempts) {
+                        console.log(\`重试 \${maxAttempts} 次后仍然失败: \${error.message}\`);
+                        throw error;
+                    }
+                    
+                    console.log(\`第 \${attempts} 次尝试失败: \${error.message}\`);
+                    console.log(\`等待 \${currentDelay}ms 后重试...\`);
+                    
+                    await new Promise(resolve => setTimeout(resolve, currentDelay));
+                    currentDelay *= backoff;
+                }
+            }
+        };
+    };
+}
+
+const unreliableApiCall = retry(3, 1000, 2)(async function() {
+    if (Math.random() < 0.7) { // 70% 失败率
+        throw new Error("API 调用失败");
+    }
+    return "成功!";
+});`,
+                java: `import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
+
+public class RetryUtil {
+    public static <T> T retry(Supplier<T> operation, int maxAttempts, long delay, double backoff) {
+        int attempts = 0;
+        long currentDelay = delay;
+        
+        while (attempts < maxAttempts) {
+            try {
+                return operation.get();
+            } catch (Exception e) {
+                attempts++;
+                if (attempts >= maxAttempts) {
+                    System.out.println("重试 " + maxAttempts + " 次后仍然失败: " + e.getMessage());
+                    throw new RuntimeException(e);
+                }
+                
+                System.out.println("第 " + attempts + " 次尝试失败: " + e.getMessage());
+                System.out.println("等待 " + currentDelay + "ms 后重试...");
+                
+                try {
+                    Thread.sleep(currentDelay);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException(ie);
+                }
+                
+                currentDelay = (long) (currentDelay * backoff);
+            }
+        }
+        
+        return null; // 不会到达这里
+    }
+    
+    public static String unreliableApiCall() {
+        if (ThreadLocalRandom.current().nextDouble() < 0.7) { // 70% 失败率
+            throw new RuntimeException("API 调用失败");
+        }
+        return "成功!";
+    }
+    
+    // 使用示例
+    public static void main(String[] args) {
+        String result = retry(() -> unreliableApiCall(), 3, 1000, 2.0);
+        System.out.println(result);
+    }
+}`,
+                go: `import (
+    "fmt"
+    "math/rand"
+    "time"
+)
+
+func retry(operation func() (interface{}, error), maxAttempts int, delay time.Duration, backoff float64) (interface{}, error) {
+    var lastErr error
+    currentDelay := delay
+    
+    for attempts := 0; attempts < maxAttempts; attempts++ {
+        result, err := operation()
+        if err == nil {
+            return result, nil
+        }
+        
+        lastErr = err
+        
+        if attempts >= maxAttempts-1 {
+            fmt.Printf("重试 %d 次后仍然失败: %v\\n", maxAttempts, err)
+            return nil, err
+        }
+        
+        fmt.Printf("第 %d 次尝试失败: %v\\n", attempts+1, err)
+        fmt.Printf("等待 %v 后重试...\\n", currentDelay)
+        
+        time.Sleep(currentDelay)
+        currentDelay = time.Duration(float64(currentDelay) * backoff)
+    }
+    
+    return nil, lastErr
+}
+
+func unreliableAPICall() (interface{}, error) {
+    if rand.Float64() < 0.7 { // 70% 失败率
+        return nil, fmt.Errorf("API 调用失败")
+    }
+    return "成功!", nil
+}
+
+// 使用示例
+func main() {
+    result, err := retry(unreliableAPICall, 3, time.Second, 2.0)
+    if err != nil {
+        fmt.Printf("最终失败: %v\\n", err)
+    } else {
+        fmt.Printf("结果: %v\\n", result)
+    }
+}`,
+                php: `<?php
+function retry($operation, $maxAttempts = 3, $delay = 1, $backoff = 2) {
+    $attempts = 0;
+    $currentDelay = $delay;
+    
+    while ($attempts < $maxAttempts) {
+        try {
+            return $operation();
+        } catch (Exception $e) {
+            $attempts++;
+            if ($attempts >= $maxAttempts) {
+                echo "重试 {$maxAttempts} 次后仍然失败: " . $e->getMessage() . "\\n";
+                throw $e;
+            }
+            
+            echo "第 {$attempts} 次尝试失败: " . $e->getMessage() . "\\n";
+            echo "等待 {$currentDelay} 秒后重试...\\n";
+            
+            sleep($currentDelay);
+            $currentDelay *= $backoff;
+        }
+    }
+}
+
+function unreliableApiCall() {
+    if (rand() / getrandmax() < 0.7) { // 70% 失败率
+        throw new Exception("API 调用失败");
+    }
+    return "成功!";
+}
+
+// 使用示例
+try {
+    $result = retry(function() {
+        return unreliableApiCall();
+    }, 3, 1, 2);
+    echo "结果: " . $result;
+} catch (Exception $e) {
+    echo "最终失败: " . $e->getMessage();
+}
+?>`,
+                csharp: `using System;
+using System.Threading.Tasks;
+
+public static class RetryHelper
+{
+    public static async Task<T> RetryAsync<T>(
+        Func<Task<T>> operation, 
+        int maxAttempts = 3, 
+        TimeSpan delay = default, 
+        double backoff = 2.0)
+    {
+        if (delay == default) delay = TimeSpan.FromSeconds(1);
+        
+        Exception lastException = null;
+        TimeSpan currentDelay = delay;
+        
+        for (int attempts = 0; attempts < maxAttempts; attempts++)
+        {
+            try
+            {
+                return await operation();
+            }
+            catch (Exception ex)
+            {
+                lastException = ex;
+                
+                if (attempts >= maxAttempts - 1)
+                {
+                    Console.WriteLine($"重试 {maxAttempts} 次后仍然失败: {ex.Message}");
+                    throw;
+                }
+                
+                Console.WriteLine($"第 {attempts + 1} 次尝试失败: {ex.Message}");
+                Console.WriteLine($"等待 {currentDelay.TotalMilliseconds}ms 后重试...");
+                
+                await Task.Delay(currentDelay);
+                currentDelay = TimeSpan.FromMilliseconds(currentDelay.TotalMilliseconds * backoff);
+            }
+        }
+        
+        throw lastException;
+    }
+}
+
+// 使用示例
+public static async Task<string> UnreliableApiCall()
+{
+    var random = new Random();
+    if (random.NextDouble() < 0.7) // 70% 失败率
+    {
+        throw new Exception("API 调用失败");
+    }
+    return "成功!";
+}
+
+// 调用示例
+try
+{
+    string result = await RetryHelper.RetryAsync(UnreliableApiCall, 3, TimeSpan.FromSeconds(1), 2.0);
+    Console.WriteLine($"结果: {result}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"最终失败: {ex.Message}");
+}`
+            },
+            'error-recovery': {
+                python: `def get_user_data(user_id):
+    """获取用户数据，支持多级降级策略"""
+    
+    # 第一级：尝试从数据库获取
+    try:
+        return get_from_database(user_id)
+    except DatabaseError as e:
+        print(f"数据库访问失败: {e}")
+    
+    # 第二级：尝试从缓存获取
+    try:
+        return get_from_cache(user_id)
+    except CacheError as e:
+        print(f"缓存访问失败: {e}")
+    
+    # 第三级：返回默认数据
+    try:
+        return get_default_user_data(user_id)
+    except Exception as e:
+        print(f"获取默认数据失败: {e}")
+    
+    # 最后降级：返回空数据
+    return {
+        "id": user_id,
+        "name": "未知用户",
+        "error": "数据不可用"
+    }`,
+                javascript: `async function getUserData(userId) {
+    // 第一级：尝试从数据库获取
+    try {
+        return await getFromDatabase(userId);
+    } catch (error) {
+        console.log(\`数据库访问失败: \${error.message}\`);
+    }
+    
+    // 第二级：尝试从缓存获取
+    try {
+        return await getFromCache(userId);
+    } catch (error) {
+        console.log(\`缓存访问失败: \${error.message}\`);
+    }
+    
+    // 第三级：返回默认数据
+    try {
+        return await getDefaultUserData(userId);
+    } catch (error) {
+        console.log(\`获取默认数据失败: \${error.message}\`);
+    }
+    
+    // 最后降级：返回空数据
+    return {
+        id: userId,
+        name: "未知用户",
+        error: "数据不可用"
+    };
+}`,
+                java: `public class UserService {
+    public UserData getUserData(String userId) {
+        // 第一级：尝试从数据库获取
+        try {
+            return getFromDatabase(userId);
+        } catch (DatabaseException e) {
+            System.out.println("数据库访问失败: " + e.getMessage());
+        }
+        
+        // 第二级：尝试从缓存获取
+        try {
+            return getFromCache(userId);
+        } catch (CacheException e) {
+            System.out.println("缓存访问失败: " + e.getMessage());
+        }
+        
+        // 第三级：返回默认数据
+        try {
+            return getDefaultUserData(userId);
+        } catch (Exception e) {
+            System.out.println("获取默认数据失败: " + e.getMessage());
+        }
+        
+        // 最后降级：返回空数据
+        return UserData.builder()
+                .id(userId)
+                .name("未知用户")
+                .error("数据不可用")
+                .build();
+    }
+}`,
+                go: `type UserData struct {
+    ID    string \`json:"id"\`
+    Name  string \`json:"name"\`
+    Error string \`json:"error,omitempty"\`
+}
+
+func getUserData(userID string) UserData {
+    // 第一级：尝试从数据库获取
+    if data, err := getFromDatabase(userID); err == nil {
+        return data
+    } else {
+        fmt.Printf("数据库访问失败: %v\\n", err)
+    }
+    
+    // 第二级：尝试从缓存获取
+    if data, err := getFromCache(userID); err == nil {
+        return data
+    } else {
+        fmt.Printf("缓存访问失败: %v\\n", err)
+    }
+    
+    // 第三级：返回默认数据
+    if data, err := getDefaultUserData(userID); err == nil {
+        return data
+    } else {
+        fmt.Printf("获取默认数据失败: %v\\n", err)
+    }
+    
+    // 最后降级：返回空数据
+    return UserData{
+        ID:    userID,
+        Name:  "未知用户",
+        Error: "数据不可用",
+    }
+}`,
+                php: `<?php
+class UserService {
+    public function getUserData($userId) {
+        // 第一级：尝试从数据库获取
+        try {
+            return $this->getFromDatabase($userId);
+        } catch (DatabaseException $e) {
+            echo "数据库访问失败: " . $e->getMessage() . "\\n";
+        }
+        
+        // 第二级：尝试从缓存获取
+        try {
+            return $this->getFromCache($userId);
+        } catch (CacheException $e) {
+            echo "缓存访问失败: " . $e->getMessage() . "\\n";
+        }
+        
+        // 第三级：返回默认数据
+        try {
+            return $this->getDefaultUserData($userId);
+        } catch (Exception $e) {
+            echo "获取默认数据失败: " . $e->getMessage() . "\\n";
+        }
+        
+        // 最后降级：返回空数据
+        return [
+            'id' => $userId,
+            'name' => '未知用户',
+            'error' => '数据不可用'
+        ];
+    }
+}
+?>`,
+                csharp: `public class UserService
+{
+    public async Task<UserData> GetUserDataAsync(string userId)
+    {
+        // 第一级：尝试从数据库获取
+        try
+        {
+            return await GetFromDatabaseAsync(userId);
+        }
+        catch (DatabaseException ex)
+        {
+            Console.WriteLine($"数据库访问失败: {ex.Message}");
+        }
+        
+        // 第二级：尝试从缓存获取
+        try
+        {
+            return await GetFromCacheAsync(userId);
+        }
+        catch (CacheException ex)
+        {
+            Console.WriteLine($"缓存访问失败: {ex.Message}");
+        }
+        
+        // 第三级：返回默认数据
+        try
+        {
+            return await GetDefaultUserDataAsync(userId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"获取默认数据失败: {ex.Message}");
+        }
+        
+        // 最后降级：返回空数据
+        return new UserData
+        {
+            Id = userId,
+            Name = "未知用户",
+            Error = "数据不可用"
+        };
+    }
+}`
+            },
+            'circuit-breaker': {
+                python: `import time
+from enum import Enum
+
+class CircuitState(Enum):
+    CLOSED = 1    # 正常状态
+    OPEN = 2      # 熔断状态
+    HALF_OPEN = 3 # 半开状态
+
+class CircuitBreaker:
+    def __init__(self, failure_threshold=5, timeout=60):
+        self.failure_threshold = failure_threshold
+        self.timeout = timeout
+        self.failure_count = 0
+        self.last_failure_time = None
+        self.state = CircuitState.CLOSED
+    
+    def call(self, func, *args, **kwargs):
+        if self.state == CircuitState.OPEN:
+            if time.time() - self.last_failure_time > self.timeout:
+                self.state = CircuitState.HALF_OPEN
+            else:
+                raise Exception("熔断器开启，服务不可用")
+        
+        try:
+            result = func(*args, **kwargs)
+            self.reset()
+            return result
+        except Exception as e:
+            self.record_failure()
+            raise
+    
+    def record_failure(self):
+        self.failure_count += 1
+        self.last_failure_time = time.time()
+        
+        if self.failure_count >= self.failure_threshold:
+            self.state = CircuitState.OPEN
+            print(f"熔断器开启，失败次数: {self.failure_count}")
+    
+    def reset(self):
+        self.failure_count = 0
+        self.state = CircuitState.CLOSED`,
+                javascript: `const CircuitState = {
+    CLOSED: 'CLOSED',     // 正常状态
+    OPEN: 'OPEN',         // 熔断状态
+    HALF_OPEN: 'HALF_OPEN' // 半开状态
+};
+
+class CircuitBreaker {
+    constructor(failureThreshold = 5, timeout = 60000) {
+        this.failureThreshold = failureThreshold;
+        this.timeout = timeout;
+        this.failureCount = 0;
+        this.lastFailureTime = null;
+        this.state = CircuitState.CLOSED;
+    }
+    
+    async call(func, ...args) {
+        if (this.state === CircuitState.OPEN) {
+            if (Date.now() - this.lastFailureTime > this.timeout) {
+                this.state = CircuitState.HALF_OPEN;
+            } else {
+                throw new Error("熔断器开启，服务不可用");
+            }
+        }
+        
+        try {
+            const result = await func(...args);
+            this.reset();
+            return result;
+        } catch (error) {
+            this.recordFailure();
+            throw error;
+        }
+    }
+    
+    recordFailure() {
+        this.failureCount++;
+        this.lastFailureTime = Date.now();
+        
+        if (this.failureCount >= this.failureThreshold) {
+            this.state = CircuitState.OPEN;
+            console.log(\`熔断器开启，失败次数: \${this.failureCount}\`);
+        }
+    }
+    
+    reset() {
+        this.failureCount = 0;
+        this.state = CircuitState.CLOSED;
+    }
+}`,
+                java: `public enum CircuitState {
+    CLOSED,    // 正常状态
+    OPEN,      // 熔断状态
+    HALF_OPEN  // 半开状态
+}
+
+public class CircuitBreaker {
+    private final int failureThreshold;
+    private final long timeout;
+    private int failureCount = 0;
+    private long lastFailureTime = 0;
+    private CircuitState state = CircuitState.CLOSED;
+    
+    public CircuitBreaker(int failureThreshold, long timeout) {
+        this.failureThreshold = failureThreshold;
+        this.timeout = timeout;
+    }
+    
+    public <T> T call(Supplier<T> operation) throws Exception {
+        if (state == CircuitState.OPEN) {
+            if (System.currentTimeMillis() - lastFailureTime > timeout) {
+                state = CircuitState.HALF_OPEN;
+            } else {
+                throw new Exception("熔断器开启，服务不可用");
+            }
+        }
+        
+        try {
+            T result = operation.get();
+            reset();
+            return result;
+        } catch (Exception e) {
+            recordFailure();
+            throw e;
+        }
+    }
+    
+    private void recordFailure() {
+        failureCount++;
+        lastFailureTime = System.currentTimeMillis();
+        
+        if (failureCount >= failureThreshold) {
+            state = CircuitState.OPEN;
+            System.out.println("熔断器开启，失败次数: " + failureCount);
+        }
+    }
+    
+    private void reset() {
+        failureCount = 0;
+        state = CircuitState.CLOSED;
+    }
+}`,
+                go: `type CircuitState int
+
+const (
+    CLOSED CircuitState = iota  // 正常状态
+    OPEN                        // 熔断状态
+    HALF_OPEN                   // 半开状态
+)
+
+type CircuitBreaker struct {
+    failureThreshold int
+    timeout          time.Duration
+    failureCount     int
+    lastFailureTime  time.Time
+    state            CircuitState
+    mutex            sync.RWMutex
+}
+
+func NewCircuitBreaker(failureThreshold int, timeout time.Duration) *CircuitBreaker {
+    return &CircuitBreaker{
+        failureThreshold: failureThreshold,
+        timeout:          timeout,
+        state:            CLOSED,
+    }
+}
+
+func (cb *CircuitBreaker) Call(operation func() (interface{}, error)) (interface{}, error) {
+    cb.mutex.Lock()
+    defer cb.mutex.Unlock()
+    
+    if cb.state == OPEN {
+        if time.Since(cb.lastFailureTime) > cb.timeout {
+            cb.state = HALF_OPEN
+        } else {
+            return nil, fmt.Errorf("熔断器开启，服务不可用")
+        }
+    }
+    
+    result, err := operation()
+    if err != nil {
+        cb.recordFailure()
+        return nil, err
+    }
+    
+    cb.reset()
+    return result, nil
+}
+
+func (cb *CircuitBreaker) recordFailure() {
+    cb.failureCount++
+    cb.lastFailureTime = time.Now()
+    
+    if cb.failureCount >= cb.failureThreshold {
+        cb.state = OPEN
+        fmt.Printf("熔断器开启，失败次数: %d\\n", cb.failureCount)
+    }
+}
+
+func (cb *CircuitBreaker) reset() {
+    cb.failureCount = 0
+    cb.state = CLOSED
+}`,
+                php: `<?php
+class CircuitState {
+    const CLOSED = 'CLOSED';     // 正常状态
+    const OPEN = 'OPEN';         // 熔断状态
+    const HALF_OPEN = 'HALF_OPEN'; // 半开状态
+}
+
+class CircuitBreaker {
+    private $failureThreshold;
+    private $timeout;
+    private $failureCount = 0;
+    private $lastFailureTime = null;
+    private $state = CircuitState::CLOSED;
+    
+    public function __construct($failureThreshold = 5, $timeout = 60) {
+        $this->failureThreshold = $failureThreshold;
+        $this->timeout = $timeout;
+    }
+    
+    public function call($operation) {
+        if ($this->state === CircuitState::OPEN) {
+            if (time() - $this->lastFailureTime > $this->timeout) {
+                $this->state = CircuitState::HALF_OPEN;
+            } else {
+                throw new Exception("熔断器开启，服务不可用");
+            }
+        }
+        
+        try {
+            $result = $operation();
+            $this->reset();
+            return $result;
+        } catch (Exception $e) {
+            $this->recordFailure();
+            throw $e;
+        }
+    }
+    
+    private function recordFailure() {
+        $this->failureCount++;
+        $this->lastFailureTime = time();
+        
+        if ($this->failureCount >= $this->failureThreshold) {
+            $this->state = CircuitState::OPEN;
+            echo "熔断器开启，失败次数: {$this->failureCount}\\n";
+        }
+    }
+    
+    private function reset() {
+        $this->failureCount = 0;
+        $this->state = CircuitState::CLOSED;
+    }
+}
+?>`,
+                csharp: `public enum CircuitState
+{
+    Closed,    // 正常状态
+    Open,      // 熔断状态
+    HalfOpen   // 半开状态
+}
+
+public class CircuitBreaker
+{
+    private readonly int _failureThreshold;
+    private readonly TimeSpan _timeout;
+    private int _failureCount = 0;
+    private DateTime _lastFailureTime = DateTime.MinValue;
+    private CircuitState _state = CircuitState.Closed;
+    private readonly object _lock = new object();
+    
+    public CircuitBreaker(int failureThreshold = 5, TimeSpan timeout = default)
+    {
+        _failureThreshold = failureThreshold;
+        _timeout = timeout == default ? TimeSpan.FromSeconds(60) : timeout;
+    }
+    
+    public async Task<T> CallAsync<T>(Func<Task<T>> operation)
+    {
+        lock (_lock)
+        {
+            if (_state == CircuitState.Open)
+            {
+                if (DateTime.UtcNow - _lastFailureTime > _timeout)
+                {
+                    _state = CircuitState.HalfOpen;
+                }
+                else
+                {
+                    throw new Exception("熔断器开启，服务不可用");
+                }
+            }
+        }
+        
+        try
+        {
+            var result = await operation();
+            Reset();
+            return result;
+        }
+        catch (Exception ex)
+        {
+            RecordFailure();
+            throw;
+        }
+    }
+    
+    private void RecordFailure()
+    {
+        lock (_lock)
+        {
+            _failureCount++;
+            _lastFailureTime = DateTime.UtcNow;
+            
+            if (_failureCount >= _failureThreshold)
+            {
+                _state = CircuitState.Open;
+                Console.WriteLine($"熔断器开启，失败次数: {_failureCount}");
+            }
+        }
+    }
+    
+    private void Reset()
+    {
+        lock (_lock)
+        {
+            _failureCount = 0;
+            _state = CircuitState.Closed;
+        }
+    }
+}`
+            }
+        };
+        
+        // Language selection
+        $('.lang-btn').click(function() {
+            $('.lang-btn').removeClass('bg-yellow-600 bg-yellow-500 bg-red-600 bg-blue-600 bg-purple-600 bg-orange-600');
+            
+            const lang = $(this).data('lang');
+            currentLanguage = lang;
+            
+            // Update selected language display
+            const langNames = {
+                python: 'Python',
+                javascript: 'JavaScript', 
+                java: 'Java',
+                go: 'Go',
+                php: 'PHP',
+                csharp: 'C#'
+            };
+            $('#selected-language').text(langNames[lang]);
+            
+            // Highlight selected button
+            const colors = {
+                python: 'bg-yellow-600',
+                javascript: 'bg-yellow-500',
+                java: 'bg-red-600',
+                go: 'bg-blue-600',
+                php: 'bg-purple-600',
+                csharp: 'bg-orange-600'
+            };
+            $(this).addClass(colors[lang]);
+            
+            updateAllCodeExamples();
+        });
+
+        // Update all code examples based on selected language
+        function updateAllCodeExamples() {
+            Object.keys(codeSnippets).forEach(snippetKey => {
+                const codeElement = $(`#${snippetKey}`);
+                if (codeElement.length && codeSnippets[snippetKey][currentLanguage]) {
+                    codeElement.text(codeSnippets[snippetKey][currentLanguage]);
+                }
+            });
+        }
+
+        // Search functionality
+        $('#search-input').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            $('.snippet-item').each(function() {
+                const itemText = $(this).text().toLowerCase();
+                if (itemText.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showCopyToast();
+            }).catch(function() {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyToast();
+            });
+        }
+
+        // Show copy success toast
+        function showCopyToast() {
+            const toast = $('#copy-toast');
+            toast.removeClass('translate-x-full').addClass('translate-x-0');
+            setTimeout(() => {
+                toast.removeClass('translate-x-0').addClass('translate-x-full');
+            }, 2000);
+        }
+
+        // Copy button click handlers
+        $('.copy-btn').click(function() {
+            const snippetType = $(this).data('snippet');
+            const codeElement = $(`#${snippetType}`);
+            
+            if (codeElement.length) {
+                const codeText = codeElement.text();
+                copyToClipboard(codeText);
+            }
+        });
+
+        // Initialize with default language
+        updateAllCodeExamples();
+    </script>
+</body>
+</html>
