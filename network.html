@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网络诊断工具 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="snippets.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="about.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    网络诊断工具
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    网络连接测试、端口扫描、网络配置查看等网络诊断工具集合，支持 Windows 和 Linux 系统
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Port Checking -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    端口占用检查
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Linux Port Commands -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            Linux 端口检查
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看所有监听端口</p>
+                                <code class="text-cyan-400 font-mono text-sm block">netstat -tlnp</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看所有端口连接</p>
+                                <code class="text-cyan-400 font-mono text-sm block">netstat -an</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看特定端口占用</p>
+                                <code class="text-cyan-400 font-mono text-sm block">netstat -tlnp | grep :8080</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">使用 ss 命令查看端口</p>
+                                <code class="text-cyan-400 font-mono text-sm block">ss -tlnp</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看特定端口的进程</p>
+                                <code class="text-cyan-400 font-mono text-sm block">lsof -i :8080</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看某个进程的端口占用</p>
+                                <code class="text-cyan-400 font-mono text-sm block">lsof -p [PID]</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Windows Port Commands -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-13.051-1.351"/>
+                            </svg>
+                            Windows 端口检查
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看所有端口连接</p>
+                                <code class="text-purple-400 font-mono text-sm block">netstat -an</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看端口和进程信息</p>
+                                <code class="text-purple-400 font-mono text-sm block">netstat -ano</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看特定端口占用</p>
+                                <code class="text-purple-400 font-mono text-sm block">netstat -ano | findstr :8080</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看监听端口</p>
+                                <code class="text-purple-400 font-mono text-sm block">netstat -an | findstr LISTENING</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">根据PID查看进程详情</p>
+                                <code class="text-purple-400 font-mono text-sm block">tasklist /fi "PID eq [PID]"</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">终止占用端口的进程</p>
+                                <code class="text-purple-400 font-mono text-sm block">taskkill /PID [PID] /F</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Connectivity -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+                        </svg>
+                    </div>
+                    网络连通性测试
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Basic Connectivity -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">基础连通性测试</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">Ping 测试</p>
+                                <code class="text-green-400 font-mono text-sm block">ping google.com</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">限制 Ping 次数 (Linux)</p>
+                                <code class="text-green-400 font-mono text-sm block">ping -c 4 google.com</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">限制 Ping 次数 (Windows)</p>
+                                <code class="text-green-400 font-mono text-sm block">ping -n 4 google.com</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">测试本地回环</p>
+                                <code class="text-green-400 font-mono text-sm block">ping 127.0.0.1</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Testing -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">高级连通性测试</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">Traceroute 路由追踪 (Linux)</p>
+                                <code class="text-green-400 font-mono text-sm block">traceroute google.com</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">Tracert 路由追踪 (Windows)</p>
+                                <code class="text-green-400 font-mono text-sm block">tracert google.com</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">测试特定端口连通性</p>
+                                <code class="text-green-400 font-mono text-sm block">telnet google.com 80</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">使用 nc 测试端口</p>
+                                <code class="text-green-400 font-mono text-sm block">nc -zv google.com 80</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Configuration -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    网络配置查看
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Linux Network Config -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">Linux 网络配置</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看网络接口</p>
+                                <code class="text-blue-400 font-mono text-sm block">ip addr show</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看网络接口 (旧命令)</p>
+                                <code class="text-blue-400 font-mono text-sm block">ifconfig</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看路由表</p>
+                                <code class="text-blue-400 font-mono text-sm block">ip route show</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看路由表 (旧命令)</p>
+                                <code class="text-blue-400 font-mono text-sm block">route -n</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看 DNS 配置</p>
+                                <code class="text-blue-400 font-mono text-sm block">cat /etc/resolv.conf</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Windows Network Config -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">Windows 网络配置</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看网络配置</p>
+                                <code class="text-blue-400 font-mono text-sm block">ipconfig</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看详细网络配置</p>
+                                <code class="text-blue-400 font-mono text-sm block">ipconfig /all</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看路由表</p>
+                                <code class="text-blue-400 font-mono text-sm block">route print</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">刷新 DNS</p>
+                                <code class="text-blue-400 font-mono text-sm block">ipconfig /flushdns</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">释放 IP 地址</p>
+                                <code class="text-blue-400 font-mono text-sm block">ipconfig /release</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">重新获取 IP 地址</p>
+                                <code class="text-blue-400 font-mono text-sm block">ipconfig /renew</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DNS Tools -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m0 18c1.657 0 3-4.03 3-9s-1.343-9-3-9m-9 9a9 9 0 019-9"/>
+                        </svg>
+                    </div>
+                    DNS 诊断工具
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">DNS 查询</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">DNS 解析查询</p>
+                                <code class="text-yellow-400 font-mono text-sm block">nslookup google.com</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">使用 dig 查询 DNS</p>
+                                <code class="text-yellow-400 font-mono text-sm block">dig google.com</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查询 MX 记录</p>
+                                <code class="text-yellow-400 font-mono text-sm block">dig google.com MX</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">反向 DNS 查询</p>
+                                <code class="text-yellow-400 font-mono text-sm block">dig -x 8.8.8.8</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">高级 DNS 测试</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">指定 DNS 服务器查询</p>
+                                <code class="text-yellow-400 font-mono text-sm block">nslookup google.com 8.8.8.8</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查询 DNS 传播</p>
+                                <code class="text-yellow-400 font-mono text-sm block">dig +trace google.com</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查询 TXT 记录</p>
+                                <code class="text-yellow-400 font-mono text-sm block">dig google.com TXT</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查询所有记录</p>
+                                <code class="text-yellow-400 font-mono text-sm block">dig google.com ANY</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Monitoring -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    网络监控和流量分析
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">流量监控</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">实时网络流量监控</p>
+                                <code class="text-red-400 font-mono text-sm block">iftop</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">网络接口统计</p>
+                                <code class="text-red-400 font-mono text-sm block">cat /proc/net/dev</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">实时带宽监控</p>
+                                <code class="text-red-400 font-mono text-sm block">nload</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">网络连接统计</p>
+                                <code class="text-red-400 font-mono text-sm block">ss -s</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">高级网络工具</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">网络扫描 (nmap)</p>
+                                <code class="text-red-400 font-mono text-sm block">nmap -sn 192.168.1.0/24</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">端口扫描</p>
+                                <code class="text-red-400 font-mono text-sm block">nmap -p 1-1000 192.168.1.1</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">HTTP 响应测试</p>
+                                <code class="text-red-400 font-mono text-sm block">curl -I https://google.com</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">网络性能测试</p>
+                                <code class="text-red-400 font-mono text-sm block">wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Firewall and Security -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    网络安全诊断
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">防火墙检查</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看 iptables 规则</p>
+                                <code class="text-orange-400 font-mono text-sm block">sudo iptables -L -n</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看 ufw 状态</p>
+                                <code class="text-orange-400 font-mono text-sm block">sudo ufw status</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">检查开放端口 (nmap)</p>
+                                <code class="text-orange-400 font-mono text-sm block">nmap localhost</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">Windows 防火墙状态</p>
+                                <code class="text-orange-400 font-mono text-sm block">netsh advfirewall show allprofiles</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">连接安全检查</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">检查可疑连接</p>
+                                <code class="text-orange-400 font-mono text-sm block">netstat -an | grep ESTABLISHED</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看活跃连接数</p>
+                                <code class="text-orange-400 font-mono text-sm block">ss -s</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">SSL/TLS 连接测试</p>
+                                <code class="text-orange-400 font-mono text-sm block">openssl s_client -connect google.com:443</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">证书信息查看</p>
+                                <code class="text-orange-400 font-mono text-sm block">echo | openssl s_client -servername google.com -connect google.com:443 2>/dev/null | openssl x509 -noout -dates</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Copy code functionality
+        function copyCode(button) {
+            const code = button.previousElementSibling.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已复制';
+                setTimeout(() => {
+                    button.textContent = '复制';
+                }, 2000);
+            });
+        }
+
+        // Add copy buttons to code blocks
+        $(document).ready(function() {
+            $('code').each(function() {
+                const button = $('<button class="ml-2 px-2 py-1 bg-gray-700 hover:bg-gray-600 text-xs rounded transition-colors duration-200" onclick="copyCode(this)">复制</button>');
+                $(this).after(button);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统服务管理 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="snippets.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="about.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    系统服务管理
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Linux和Windows系统服务管理命令集合，包括启动、停止、重启服务以及开机自启设置
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Linux systemctl Commands -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    Linux systemctl 命令
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Service Control -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">服务控制</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">启动服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl start [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">停止服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl stop [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">重启服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl restart [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">重新加载配置</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl reload [service-name]</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service Status -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">服务状态</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看服务状态</p>
+                                <code class="text-blue-400 font-mono text-sm block">systemctl status [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出所有服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">systemctl list-units --type=service</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出运行中的服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">systemctl list-units --type=service --state=running</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出失败的服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">systemctl list-units --type=service --state=failed</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Auto Start -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">开机自启</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">启用开机自启</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl enable [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">禁用开机自启</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl disable [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">检查是否开机自启</p>
+                                <code class="text-blue-400 font-mono text-sm block">systemctl is-enabled [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出开机自启服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">systemctl list-unit-files --type=service --state=enabled</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Common Examples -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">常用示例</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">管理 Nginx 服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl start nginx<br>sudo systemctl enable nginx</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">管理 Apache 服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl restart apache2<br>sudo systemctl status apache2</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">管理 MySQL 服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl start mysql<br>sudo systemctl enable mysql</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">管理 SSH 服务</p>
+                                <code class="text-blue-400 font-mono text-sm block">sudo systemctl restart sshd<br>sudo systemctl status sshd</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linux service Commands -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    Linux service 命令（传统方式）
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">基本操作</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">启动服务</p>
+                                <code class="text-green-400 font-mono text-sm block">sudo service [service-name] start</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">停止服务</p>
+                                <code class="text-green-400 font-mono text-sm block">sudo service [service-name] stop</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">重启服务</p>
+                                <code class="text-green-400 font-mono text-sm block">sudo service [service-name] restart</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看状态</p>
+                                <code class="text-green-400 font-mono text-sm block">sudo service [service-name] status</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">开机自启管理</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">启用开机自启</p>
+                                <code class="text-green-400 font-mono text-sm block">sudo chkconfig [service-name] on</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">禁用开机自启</p>
+                                <code class="text-green-400 font-mono text-sm block">sudo chkconfig [service-name] off</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看自启状态</p>
+                                <code class="text-green-400 font-mono text-sm block">chkconfig --list [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出所有服务</p>
+                                <code class="text-green-400 font-mono text-sm block">chkconfig --list</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Windows Services -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-13.051-1.351"/>
+                        </svg>
+                    </div>
+                    Windows 服务管理
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- SC Commands -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">SC 命令</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">启动服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">sc start [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">停止服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">sc stop [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看服务状态</p>
+                                <code class="text-purple-400 font-mono text-sm block">sc query [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出所有服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">sc query state=all</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NET Commands -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">NET 命令</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">启动服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">net start [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">停止服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">net stop [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">暂停服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">net pause [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">继续服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">net continue [service-name]</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PowerShell Commands -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">PowerShell 命令</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">获取服务信息</p>
+                                <code class="text-purple-400 font-mono text-sm block">Get-Service -Name [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">启动服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">Start-Service -Name [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">停止服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">Stop-Service -Name [service-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">重启服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">Restart-Service -Name [service-name]</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Windows Examples -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">常用示例</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">IIS 服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">net start W3SVC<br>net stop W3SVC</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">SQL Server 服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">net start MSSQLSERVER<br>sc query MSSQLSERVER</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">Windows Update</p>
+                                <code class="text-purple-400 font-mono text-sm block">net start wuauserv<br>net stop wuauserv</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">远程桌面服务</p>
+                                <code class="text-purple-400 font-mono text-sm block">net start TermService<br>sc config TermService start=auto</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Copy code functionality
+        function copyCode(button) {
+            const code = button.previousElementSibling.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已复制';
+                setTimeout(() => {
+                    button.textContent = '复制';
+                }, 2000);
+            });
+        }
+
+        // Add copy buttons to code blocks
+        $(document).ready(function() {
+            $('code').each(function() {
+                const button = $('<button class="ml-2 px-2 py-1 bg-gray-700 hover:bg-gray-600 text-xs rounded transition-colors duration-200" onclick="copyCode(this)">复制</button>');
+                $(this).after(button);
+            });
+        });
+    </script>
+</body>
+</html>

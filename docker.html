@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker 命令 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="snippets.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">代码片段</a>
+                    <a href="about.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Docker 命令
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Docker容器管理命令集合，包括镜像构建、容器运行、网络管理、数据卷等完整操作指南
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Image Management -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.186m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186"/>
+                        </svg>
+                    </div>
+                    镜像管理
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Build and Pull -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">构建和拉取</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">构建镜像</p>
+                                <code class="text-purple-400 font-mono text-sm block">docker build -t [image-name]:[tag] .</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">从 Docker Hub 拉取镜像</p>
+                                <code class="text-purple-400 font-mono text-sm block">docker pull [image-name]:[tag]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">推送镜像到仓库</p>
+                                <code class="text-purple-400 font-mono text-sm block">docker push [image-name]:[tag]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">给镜像打标签</p>
+                                <code class="text-purple-400 font-mono text-sm block">docker tag [source-image] [target-image]</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- List and Remove -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">查看和删除</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出本地镜像</p>
+                                <code class="text-purple-400 font-mono text-sm block">docker images</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看镜像详情</p>
+                                <code class="text-purple-400 font-mono text-sm block">docker inspect [image-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">删除镜像</p>
+                                <code class="text-purple-400 font-mono text-sm block">docker rmi [image-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">删除未使用的镜像</p>
+                                <code class="text-purple-400 font-mono text-sm block">docker image prune</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Container Management -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                    </div>
+                    容器管理
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Run and Control -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">运行和控制</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">运行容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker run -d --name [container-name] [image]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">交互式运行</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker run -it [image] /bin/bash</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">端口映射运行</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker run -p [host-port]:[container-port] [image]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">挂载数据卷</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker run -v [host-path]:[container-path] [image]</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Container Operations -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">容器操作</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">启动容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker start [container-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">停止容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker stop [container-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">重启容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker restart [container-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">进入容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker exec -it [container-name] /bin/bash</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Container Info -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">查看信息</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出运行中的容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker ps</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出所有容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker ps -a</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看容器日志</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker logs [container-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">实时查看日志</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker logs -f [container-name]</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Container Cleanup -->
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">清理操作</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">删除容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker rm [container-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">强制删除运行中的容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker rm -f [container-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">删除所有停止的容器</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker container prune</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看容器资源使用</p>
+                                <code class="text-blue-400 font-mono text-sm block">docker stats [container-name]</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Docker Compose -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+                        </svg>
+                    </div>
+                    Docker Compose
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">基本操作</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">启动服务</p>
+                                <code class="text-green-400 font-mono text-sm block">docker-compose up -d</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">停止服务</p>
+                                <code class="text-green-400 font-mono text-sm block">docker-compose down</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">重启服务</p>
+                                <code class="text-green-400 font-mono text-sm block">docker-compose restart</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看服务状态</p>
+                                <code class="text-green-400 font-mono text-sm block">docker-compose ps</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">高级操作</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">构建并启动</p>
+                                <code class="text-green-400 font-mono text-sm block">docker-compose up --build</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看日志</p>
+                                <code class="text-green-400 font-mono text-sm block">docker-compose logs -f</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">执行命令</p>
+                                <code class="text-green-400 font-mono text-sm block">docker-compose exec [service] [command]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">扩展服务</p>
+                                <code class="text-green-400 font-mono text-sm block">docker-compose up --scale [service]=[number]</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Management -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m0 18c1.657 0 3-4.03 3-9s-1.343-9-3-9m-9 9a9 9 0 019-9"/>
+                        </svg>
+                    </div>
+                    网络管理
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">网络操作</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出网络</p>
+                                <code class="text-cyan-400 font-mono text-sm block">docker network ls</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">创建网络</p>
+                                <code class="text-cyan-400 font-mono text-sm block">docker network create [network-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">连接容器到网络</p>
+                                <code class="text-cyan-400 font-mono text-sm block">docker network connect [network] [container]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">删除网络</p>
+                                <code class="text-cyan-400 font-mono text-sm block">docker network rm [network-name]</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">数据卷管理</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">列出数据卷</p>
+                                <code class="text-cyan-400 font-mono text-sm block">docker volume ls</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">创建数据卷</p>
+                                <code class="text-cyan-400 font-mono text-sm block">docker volume create [volume-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">查看数据卷详情</p>
+                                <code class="text-cyan-400 font-mono text-sm block">docker volume inspect [volume-name]</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">删除未使用的数据卷</p>
+                                <code class="text-cyan-400 font-mono text-sm block">docker volume prune</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Examples -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    常用示例
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">Web 服务</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">运行 Nginx</p>
+                                <code class="text-orange-400 font-mono text-sm block">docker run -d -p 80:80 nginx</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">运行 Apache</p>
+                                <code class="text-orange-400 font-mono text-sm block">docker run -d -p 8080:80 httpd</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">运行 Node.js 应用</p>
+                                <code class="text-orange-400 font-mono text-sm block">docker run -d -p 3000:3000 node:16-alpine</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">数据库</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">运行 MySQL</p>
+                                <code class="text-orange-400 font-mono text-sm block">docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password mysql</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">运行 PostgreSQL</p>
+                                <code class="text-orange-400 font-mono text-sm block">docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=password postgres</code>
+                            </div>
+                            <div class="bg-gray-900 rounded-lg p-4">
+                                <p class="text-gray-300 mb-2">运行 Redis</p>
+                                <code class="text-orange-400 font-mono text-sm block">docker run -d -p 6379:6379 redis</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Copy code functionality
+        function copyCode(button) {
+            const code = button.previousElementSibling.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已复制';
+                setTimeout(() => {
+                    button.textContent = '复制';
+                }, 2000);
+            });
+        }
+
+        // Add copy buttons to code blocks
+        $(document).ready(function() {
+            $('code').each(function() {
+                const button = $('<button class="ml-2 px-2 py-1 bg-gray-700 hover:bg-gray-600 text-xs rounded transition-colors duration-200" onclick="copyCode(this)">复制</button>');
+                $(this).after(button);
+            });
+        });
+    </script>
+</body>
+</html>
