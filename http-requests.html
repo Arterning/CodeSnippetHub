@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP 请求代码片段 - CodeSnippetHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'sans': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'cyber': {
+                            '50': '#f0f9ff',
+                            '500': '#00d9ff',
+                            '600': '#00c1e6',
+                            '700': '#00a8cc',
+                            '800': '#0090b3',
+                            '900': '#007799'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .copy-btn {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .code-block:hover .copy-btn {
+            opacity: 1;
+        }
+        .copied {
+            background-color: #10b981 !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyber-500 to-purple-500 rounded-lg mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold text-white">CodeSnippetHub</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">首页</a>
+                    <a href="commands.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">命令工具</a>
+                    <a href="snippets.html" class="text-cyber-400 font-semibold">代码片段</a>
+                    <a href="about.html" class="text-gray-300 hover:text-cyber-400 transition-colors duration-200">关于</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                    </svg>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    HTTP 请求代码片段
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    各种编程语言的HTTP请求实现，包括GET、POST、PUT、DELETE等常用方法
+                </p>
+                <div class="mt-6">
+                    <a href="snippets.html" class="text-cyber-400 hover:text-cyber-300 font-medium">
+                        ← 返回代码片段库
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Language Tabs -->
+    <section class="py-8 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-2" id="language-tabs">
+                <button class="lang-tab active px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold transition-all duration-200 hover:bg-blue-700" data-lang="python">Python</button>
+                <button class="lang-tab px-6 py-2 bg-gray-700 text-gray-300 rounded-lg font-semibold transition-all duration-200 hover:bg-gray-600" data-lang="javascript">JavaScript</button>
+                <button class="lang-tab px-6 py-2 bg-gray-700 text-gray-300 rounded-lg font-semibold transition-all duration-200 hover:bg-gray-600" data-lang="java">Java</button>
+                <button class="lang-tab px-6 py-2 bg-gray-700 text-gray-300 rounded-lg font-semibold transition-all duration-200 hover:bg-gray-600" data-lang="go">Go</button>
+                <button class="lang-tab px-6 py-2 bg-gray-700 text-gray-300 rounded-lg font-semibold transition-all duration-200 hover:bg-gray-600" data-lang="php">PHP</button>
+                <button class="lang-tab px-6 py-2 bg-gray-700 text-gray-300 rounded-lg font-semibold transition-all duration-200 hover:bg-gray-600" data-lang="csharp">C#</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Snippets Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Python Snippets -->
+            <div class="language-content" id="python-content">
+                <h2 class="text-3xl font-bold text-white mb-8 text-center">Python HTTP 请求</h2>
+                
+                <!-- GET Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-blue-400">GET 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100"># 使用 requests 库
+import requests
+
+# 简单 GET 请求
+response = requests.get('https://api.example.com/users')
+print(response.status_code)
+print(response.json())
+
+# 带参数的 GET 请求
+params = {'page': 1, 'limit': 10}
+response = requests.get('https://api.example.com/users', params=params)
+
+# 带请求头的 GET 请求
+headers = {
+    'Authorization': 'Bearer your-token',
+    'User-Agent': 'MyApp/1.0'
+}
+response = requests.get('https://api.example.com/users', headers=headers)</code></pre>
+                    </div>
+                </div>
+
+                <!-- POST Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-green-400">POST 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100"># JSON 数据 POST 请求
+import requests
+import json
+
+data = {
+    'name': 'John Doe',
+    'email': 'john@example.com'
+}
+
+headers = {'Content-Type': 'application/json'}
+response = requests.post('https://api.example.com/users', 
+                        json=data, headers=headers)
+
+# 表单数据 POST 请求
+form_data = {'username': 'john', 'password': 'secret'}
+response = requests.post('https://api.example.com/login', data=form_data)
+
+# 文件上传
+files = {'file': open('document.pdf', 'rb')}
+response = requests.post('https://api.example.com/upload', files=files)</code></pre>
+                    </div>
+                </div>
+
+                <!-- PUT Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-yellow-400">PUT 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100"># PUT 请求更新资源
+import requests
+
+data = {
+    'name': 'John Smith',
+    'email': 'johnsmith@example.com'
+}
+
+response = requests.put('https://api.example.com/users/123', json=data)
+print(f"Status: {response.status_code}")
+print(response.json())</code></pre>
+                    </div>
+                </div>
+
+                <!-- DELETE Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-red-400">DELETE 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100"># DELETE 请求删除资源
+import requests
+
+headers = {'Authorization': 'Bearer your-token'}
+response = requests.delete('https://api.example.com/users/123', headers=headers)
+
+if response.status_code == 204:
+    print("用户删除成功")
+else:
+    print(f"删除失败: {response.status_code}")</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript Snippets -->
+            <div class="language-content hidden" id="javascript-content">
+                <h2 class="text-3xl font-bold text-white mb-8 text-center">JavaScript HTTP 请求</h2>
+                
+                <!-- GET Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-blue-400">GET 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">// 使用 Fetch API
+async function getData() {
+    try {
+        const response = await fetch('https://api.example.com/users');
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// 带参数的 GET 请求
+async function getDataWithParams() {
+    const params = new URLSearchParams({
+        page: 1,
+        limit: 10
+    });
+    
+    const response = await fetch(`https://api.example.com/users?${params}`);
+    const data = await response.json();
+    return data;
+}
+
+// 使用 XMLHttpRequest
+function getDataXHR() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://api.example.com/users');
+    xhr.setRequestHeader('Authorization', 'Bearer your-token');
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+            console.log(data);
+        }
+    };
+    
+    xhr.send();
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- POST Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-green-400">POST 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">// JSON 数据 POST 请求
+async function postData() {
+    const data = {
+        name: 'John Doe',
+        email: 'john@example.com'
+    };
+
+    try {
+        const response = await fetch('https://api.example.com/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer your-token'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        console.log('Success:', result);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// 表单数据 POST 请求
+async function postFormData() {
+    const formData = new FormData();
+    formData.append('username', 'john');
+    formData.append('password', 'secret');
+
+    const response = await fetch('https://api.example.com/login', {
+        method: 'POST',
+        body: formData
+    });
+
+    return response.json();
+}
+
+// 文件上传
+async function uploadFile(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('https://api.example.com/upload', {
+        method: 'POST',
+        body: formData
+    });
+
+    return response.json();
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- PUT Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-yellow-400">PUT 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">// PUT 请求更新资源
+async function updateUser(userId, userData) {
+    try {
+        const response = await fetch(`https://api.example.com/users/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer your-token'
+            },
+            body: JSON.stringify(userData)
+        });
+
+        if (response.ok) {
+            const updatedUser = await response.json();
+            console.log('User updated:', updatedUser);
+            return updatedUser;
+        } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- DELETE Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-red-400">DELETE 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">// DELETE 请求删除资源
+async function deleteUser(userId) {
+    try {
+        const response = await fetch(`https://api.example.com/users/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer your-token'
+            }
+        });
+
+        if (response.status === 204) {
+            console.log('User deleted successfully');
+            return true;
+        } else if (response.status === 404) {
+            console.log('User not found');
+            return false;
+        } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        return false;
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Java Snippets -->
+            <div class="language-content hidden" id="java-content">
+                <h2 class="text-3xl font-bold text-white mb-8 text-center">Java HTTP 请求</h2>
+                
+                <!-- GET Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-blue-400">GET 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">// 使用 HttpURLConnection
+import java.io.*;
+import java.net.*;
+
+public class HttpGetExample {
+    public static void main(String[] args) throws IOException {
+        URL url = new URL("https://api.example.com/users");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Authorization", "Bearer your-token");
+        conn.setRequestProperty("User-Agent", "Java Application");
+        
+        int responseCode = conn.getResponseCode();
+        System.out.println("Response Code: " + responseCode);
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+        
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        
+        System.out.println(response.toString());
+    }
+}
+
+// 使用 HttpClient (Java 11+)
+import java.net.http.*;
+import java.net.URI;
+import java.time.Duration;
+
+public class ModernHttpGet {
+    public static void main(String[] args) throws Exception {
+        HttpClient client = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(10))
+            .build();
+        
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://api.example.com/users"))
+            .header("Authorization", "Bearer your-token")
+            .GET()
+            .build();
+        
+        HttpResponse<String> response = client.send(request, 
+            HttpResponse.BodyHandlers.ofString());
+        
+        System.out.println("Status: " + response.statusCode());
+        System.out.println("Body: " + response.body());
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- POST Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-green-400">POST 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">// 使用 HttpClient 发送 JSON 数据
+import java.net.http.*;
+import java.net.URI;
+
+public class HttpPostExample {
+    public static void main(String[] args) throws Exception {
+        String jsonData = "{"
+            + "\"name\":\"John Doe\","
+            + "\"email\":\"john@example.com\""
+            + "}";
+        
+        HttpClient client = HttpClient.newHttpClient();
+        
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://api.example.com/users"))
+            .header("Content-Type", "application/json")
+            .header("Authorization", "Bearer your-token")
+            .POST(HttpRequest.BodyPublishers.ofString(jsonData))
+            .build();
+        
+        HttpResponse<String> response = client.send(request,
+            HttpResponse.BodyHandlers.ofString());
+        
+        System.out.println("Status: " + response.statusCode());
+        System.out.println("Response: " + response.body());
+    }
+}
+
+// 表单数据 POST 请求
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+public class FormPostExample {
+    public static void main(String[] args) throws Exception {
+        String formData = "username=" + URLEncoder.encode("john", StandardCharsets.UTF_8)
+            + "&password=" + URLEncoder.encode("secret", StandardCharsets.UTF_8);
+        
+        HttpClient client = HttpClient.newHttpClient();
+        
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://api.example.com/login"))
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .POST(HttpRequest.BodyPublishers.ofString(formData))
+            .build();
+        
+        HttpResponse<String> response = client.send(request,
+            HttpResponse.BodyHandlers.ofString());
+        
+        System.out.println("Login response: " + response.body());
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- PUT Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-yellow-400">PUT 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">// PUT 请求更新资源
+import java.net.http.*;
+import java.net.URI;
+
+public class HttpPutExample {
+    public static void main(String[] args) throws Exception {
+        String updateData = "{"
+            + "\"name\":\"John Smith\","
+            + "\"email\":\"johnsmith@example.com\""
+            + "}";
+        
+        HttpClient client = HttpClient.newHttpClient();
+        
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://api.example.com/users/123"))
+            .header("Content-Type", "application/json")
+            .header("Authorization", "Bearer your-token")
+            .PUT(HttpRequest.BodyPublishers.ofString(updateData))
+            .build();
+        
+        HttpResponse<String> response = client.send(request,
+            HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() == 200) {
+            System.out.println("User updated successfully");
+            System.out.println("Updated user: " + response.body());
+        } else {
+            System.out.println("Update failed with status: " + response.statusCode());
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- DELETE Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-red-400">DELETE 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">// DELETE 请求删除资源
+import java.net.http.*;
+import java.net.URI;
+
+public class HttpDeleteExample {
+    public static void main(String[] args) throws Exception {
+        HttpClient client = HttpClient.newHttpClient();
+        
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://api.example.com/users/123"))
+            .header("Authorization", "Bearer your-token")
+            .DELETE()
+            .build();
+        
+        HttpResponse<String> response = client.send(request,
+            HttpResponse.BodyHandlers.ofString());
+        
+        switch (response.statusCode()) {
+            case 204:
+                System.out.println("User deleted successfully");
+                break;
+            case 404:
+                System.out.println("User not found");
+                break;
+            default:
+                System.out.println("Delete failed with status: " + response.statusCode());
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Go Snippets -->
+            <div class="language-content hidden" id="go-content">
+                <h2 class="text-3xl font-bold text-white mb-8 text-center">Go HTTP 请求</h2>
+                
+                <!-- GET Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-blue-400">GET 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">package main
+
+import (
+    "fmt"
+    "io"
+    "net/http"
+    "time"
+)
+
+func main() {
+    // 简单 GET 请求
+    resp, err := http.Get("https://api.example.com/users")
+    if err != nil {
+        fmt.Printf("Error: %v\n", err)
+        return
+    }
+    defer resp.Body.Close()
+
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Printf("Error reading response: %v\n", err)
+        return
+    }
+
+    fmt.Printf("Status: %s\n", resp.Status)
+    fmt.Printf("Body: %s\n", string(body))
+}
+
+// 带请求头的 GET 请求
+func getWithHeaders() {
+    client := &http.Client{
+        Timeout: 10 * time.Second,
+    }
+
+    req, err := http.NewRequest("GET", "https://api.example.com/users", nil)
+    if err != nil {
+        fmt.Printf("Error creating request: %v\n", err)
+        return
+    }
+
+    req.Header.Set("Authorization", "Bearer your-token")
+    req.Header.Set("User-Agent", "Go Application")
+
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Printf("Error: %v\n", err)
+        return
+    }
+    defer resp.Body.Close()
+
+    body, _ := io.ReadAll(resp.Body)
+    fmt.Printf("Response: %s\n", string(body))
+}
+
+// 带查询参数的 GET 请求
+func getWithParams() {
+    baseURL := "https://api.example.com/users"
+    req, _ := http.NewRequest("GET", baseURL, nil)
+    
+    q := req.URL.Query()
+    q.Add("page", "1")
+    q.Add("limit", "10")
+    req.URL.RawQuery = q.Encode()
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Printf("Error: %v\n", err)
+        return
+    }
+    defer resp.Body.Close()
+
+    // 处理响应...
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- POST Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-green-400">POST 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+    "net/url"
+    "strings"
+)
+
+// JSON 数据 POST 请求
+func postJSON() {
+    user := map[string]string{
+        "name":  "John Doe",
+        "email": "john@example.com",
+    }
+
+    jsonData, err := json.Marshal(user)
+    if err != nil {
+        fmt.Printf("Error marshaling JSON: %v\n", err)
+        return
+    }
+
+    req, err := http.NewRequest("POST", "https://api.example.com/users", 
+        bytes.NewBuffer(jsonData))
+    if err != nil {
+        fmt.Printf("Error creating request: %v\n", err)
+        return
+    }
+
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Authorization", "Bearer your-token")
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Printf("Error: %v\n", err)
+        return
+    }
+    defer resp.Body.Close()
+
+    body, _ := io.ReadAll(resp.Body)
+    fmt.Printf("Status: %s\n", resp.Status)
+    fmt.Printf("Response: %s\n", string(body))
+}
+
+// 表单数据 POST 请求
+func postForm() {
+    formData := url.Values{}
+    formData.Set("username", "john")
+    formData.Set("password", "secret")
+
+    req, err := http.NewRequest("POST", "https://api.example.com/login",
+        strings.NewReader(formData.Encode()))
+    if err != nil {
+        fmt.Printf("Error creating request: %v\n", err)
+        return
+    }
+
+    req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Printf("Error: %v\n", err)
+        return
+    }
+    defer resp.Body.Close()
+
+    body, _ := io.ReadAll(resp.Body)
+    fmt.Printf("Login response: %s\n", string(body))
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- PUT Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-yellow-400">PUT 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+// PUT 请求更新资源
+func updateUser(userID string) {
+    updatedUser := map[string]string{
+        "name":  "John Smith",
+        "email": "johnsmith@example.com",
+    }
+
+    jsonData, err := json.Marshal(updatedUser)
+    if err != nil {
+        fmt.Printf("Error marshaling JSON: %v\n", err)
+        return
+    }
+
+    url := fmt.Sprintf("https://api.example.com/users/%s", userID)
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        fmt.Printf("Error creating request: %v\n", err)
+        return
+    }
+
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Authorization", "Bearer your-token")
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Printf("Error: %v\n", err)
+        return
+    }
+    defer resp.Body.Close()
+
+    if resp.StatusCode == http.StatusOK {
+        body, _ := io.ReadAll(resp.Body)
+        fmt.Printf("User updated successfully: %s\n", string(body))
+    } else {
+        fmt.Printf("Update failed with status: %s\n", resp.Status)
+    }
+}
+
+func main() {
+    updateUser("123")
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- DELETE Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-red-400">DELETE 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+// DELETE 请求删除资源
+func deleteUser(userID string) {
+    url := fmt.Sprintf("https://api.example.com/users/%s", userID)
+    req, err := http.NewRequest("DELETE", url, nil)
+    if err != nil {
+        fmt.Printf("Error creating request: %v\n", err)
+        return
+    }
+
+    req.Header.Set("Authorization", "Bearer your-token")
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Printf("Error: %v\n", err)
+        return
+    }
+    defer resp.Body.Close()
+
+    switch resp.StatusCode {
+    case http.StatusNoContent:
+        fmt.Println("User deleted successfully")
+    case http.StatusNotFound:
+        fmt.Println("User not found")
+    default:
+        fmt.Printf("Delete failed with status: %s\n", resp.Status)
+    }
+}
+
+func main() {
+    deleteUser("123")
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHP Snippets -->
+            <div class="language-content hidden" id="php-content">
+                <h2 class="text-3xl font-bold text-white mb-8 text-center">PHP HTTP 请求</h2>
+                
+                <!-- GET Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-blue-400">GET 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">&lt;?php
+// 使用 cURL 的 GET 请求
+function httpGet($url, $headers = []) {
+    $ch = curl_init();
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    
+    if (!empty($headers)) {
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    }
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+    if (curl_errno($ch)) {
+        throw new Exception('cURL error: ' . curl_error($ch));
+    }
+    
+    curl_close($ch);
+    
+    return [
+        'status' => $httpCode,
+        'body' => $response
+    ];
+}
+
+// 使用示例
+try {
+    $headers = [
+        'Authorization: Bearer your-token',
+        'User-Agent: PHP Application'
+    ];
+    
+    $result = httpGet('https://api.example.com/users', $headers);
+    echo "Status: " . $result['status'] . "\n";
+    echo "Response: " . $result['body'] . "\n";
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
+
+// 使用 file_get_contents (简单方式)
+$context = stream_context_create([
+    'http' => [
+        'method' => 'GET',
+        'header' => [
+            'Authorization: Bearer your-token',
+            'User-Agent: PHP Application'
+        ]
+    ]
+]);
+
+$response = file_get_contents('https://api.example.com/users', false, $context);
+if ($response === false) {
+    echo "Request failed\n";
+} else {
+    echo "Response: " . $response . "\n";
+}
+?&gt;</code></pre>
+                    </div>
+                </div>
+
+                <!-- POST Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-green-400">POST 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">&lt;?php
+// JSON 数据 POST 请求
+function httpPostJSON($url, $data, $headers = []) {
+    $ch = curl_init();
+    
+    $jsonData = json_encode($data);
+    
+    $defaultHeaders = [
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($jsonData)
+    ];
+    
+    $allHeaders = array_merge($defaultHeaders, $headers);
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $allHeaders);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+    if (curl_errno($ch)) {
+        throw new Exception('cURL error: ' . curl_error($ch));
+    }
+    
+    curl_close($ch);
+    
+    return [
+        'status' => $httpCode,
+        'body' => json_decode($response, true)
+    ];
+}
+
+// 使用示例
+$userData = [
+    'name' => 'John Doe',
+    'email' => 'john@example.com'
+];
+
+$headers = ['Authorization: Bearer your-token'];
+
+try {
+    $result = httpPostJSON('https://api.example.com/users', $userData, $headers);
+    echo "Status: " . $result['status'] . "\n";
+    echo "Created user: " . print_r($result['body'], true) . "\n";
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
+
+// 表单数据 POST 请求
+function httpPostForm($url, $formData) {
+    $ch = curl_init();
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($formData));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    $response = curl_exec($ch);
+    curl_close($ch);
+    
+    return $response;
+}
+
+// 登录示例
+$loginData = [
+    'username' => 'john',
+    'password' => 'secret'
+];
+
+$loginResponse = httpPostForm('https://api.example.com/login', $loginData);
+echo "Login response: " . $loginResponse . "\n";
+?&gt;</code></pre>
+                    </div>
+                </div>
+
+                <!-- PUT Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-yellow-400">PUT 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">&lt;?php
+// PUT 请求更新资源
+function httpPut($url, $data, $headers = []) {
+    $ch = curl_init();
+    
+    $jsonData = json_encode($data);
+    
+    $defaultHeaders = [
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($jsonData)
+    ];
+    
+    $allHeaders = array_merge($defaultHeaders, $headers);
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $allHeaders);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+    if (curl_errno($ch)) {
+        throw new Exception('cURL error: ' . curl_error($ch));
+    }
+    
+    curl_close($ch);
+    
+    return [
+        'status' => $httpCode,
+        'body' => json_decode($response, true)
+    ];
+}
+
+// 更新用户示例
+$updateData = [
+    'name' => 'John Smith',
+    'email' => 'johnsmith@example.com'
+];
+
+$headers = ['Authorization: Bearer your-token'];
+
+try {
+    $result = httpPut('https://api.example.com/users/123', $updateData, $headers);
+    
+    if ($result['status'] === 200) {
+        echo "User updated successfully\n";
+        echo "Updated user: " . print_r($result['body'], true) . "\n";
+    } else {
+        echo "Update failed with status: " . $result['status'] . "\n";
+    }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
+?&gt;</code></pre>
+                    </div>
+                </div>
+
+                <!-- DELETE Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-red-400">DELETE 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">&lt;?php
+// DELETE 请求删除资源
+function httpDelete($url, $headers = []) {
+    $ch = curl_init();
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+    if (curl_errno($ch)) {
+        throw new Exception('cURL error: ' . curl_error($ch));
+    }
+    
+    curl_close($ch);
+    
+    return [
+        'status' => $httpCode,
+        'body' => $response
+    ];
+}
+
+// 删除用户示例
+function deleteUser($userId) {
+    $url = "https://api.example.com/users/" . $userId;
+    $headers = ['Authorization: Bearer your-token'];
+    
+    try {
+        $result = httpDelete($url, $headers);
+        
+        switch ($result['status']) {
+            case 204:
+                echo "User deleted successfully\n";
+                return true;
+            case 404:
+                echo "User not found\n";
+                return false;
+            default:
+                echo "Delete failed with status: " . $result['status'] . "\n";
+                return false;
+        }
+    } catch (Exception $e) {
+        echo "Error deleting user: " . $e->getMessage() . "\n";
+        return false;
+    }
+}
+
+// 使用示例
+if (deleteUser('123')) {
+    echo "Operation completed successfully\n";
+} else {
+    echo "Operation failed\n";
+}
+?&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C# Snippets -->
+            <div class="language-content hidden" id="csharp-content">
+                <h2 class="text-3xl font-bold text-white mb-8 text-center">C# HTTP 请求</h2>
+                
+                <!-- GET Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-blue-400">GET 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+public class HttpGetExample
+{
+    private static readonly HttpClient client = new HttpClient();
+
+    public static async Task Main()
+    {
+        // 简单 GET 请求
+        try
+        {
+            HttpResponseMessage response = await client.GetAsync("https://api.example.com/users");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            
+            Console.WriteLine($"Status: {response.StatusCode}");
+            Console.WriteLine($"Response: {responseBody}");
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+        }
+    }
+}
+
+// 带请求头的 GET 请求
+public class HttpGetWithHeaders
+{
+    public static async Task GetDataWithHeaders()
+    {
+        using (var client = new HttpClient())
+        {
+            // 设置请求头
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer your-token");
+            client.DefaultRequestHeaders.Add("User-Agent", "C# Application");
+            
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync("https://api.example.com/users");
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Response: {content}");
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+    }
+}
+
+// 带查询参数的 GET 请求
+public class HttpGetWithParams
+{
+    public static async Task GetWithQueryParams()
+    {
+        using (var client = new HttpClient())
+        {
+            var uriBuilder = new UriBuilder("https://api.example.com/users");
+            var query = System.Web.HttpUtility.ParseQueryString(string.Empty);
+            query["page"] = "1";
+            query["limit"] = "10";
+            uriBuilder.Query = query.ToString();
+
+            HttpResponseMessage response = await client.GetAsync(uriBuilder.ToString());
+            string content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(content);
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- POST Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-green-400">POST 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+// JSON 数据 POST 请求
+public class HttpPostExample
+{
+    public class User
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
+
+    public static async Task PostJsonData()
+    {
+        using (var client = new HttpClient())
+        {
+            var user = new User
+            {
+                Name = "John Doe",
+                Email = "john@example.com"
+            };
+
+            string jsonData = JsonConvert.SerializeObject(user);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            // 设置请求头
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer your-token");
+
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync("https://api.example.com/users", content);
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"User created: {responseBody}");
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+    }
+}
+
+// 表单数据 POST 请求
+public class HttpPostFormExample
+{
+    public static async Task PostFormData()
+    {
+        using (var client = new HttpClient())
+        {
+            var formData = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("username", "john"),
+                new KeyValuePair<string, string>("password", "secret")
+            };
+
+            var formContent = new FormUrlEncodedContent(formData);
+
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync("https://api.example.com/login", formContent);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Login response: {responseBody}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+    }
+}
+
+// 文件上传
+public class HttpFileUploadExample
+{
+    public static async Task UploadFile(string filePath)
+    {
+        using (var client = new HttpClient())
+        using (var form = new MultipartFormDataContent())
+        using (var fileStream = File.OpenRead(filePath))
+        {
+            form.Add(new StreamContent(fileStream), "file", Path.GetFileName(filePath));
+
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync("https://api.example.com/upload", form);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Upload response: {responseBody}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- PUT Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-yellow-400">PUT 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+// PUT 请求更新资源
+public class HttpPutExample
+{
+    public class UpdateUser
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
+
+    public static async Task UpdateUser(string userId)
+    {
+        using (var client = new HttpClient())
+        {
+            var updatedUser = new UpdateUser
+            {
+                Name = "John Smith",
+                Email = "johnsmith@example.com"
+            };
+
+            string jsonData = JsonConvert.SerializeObject(updatedUser);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            // 设置授权头
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer your-token");
+
+            try
+            {
+                HttpResponseMessage response = await client.PutAsync($"https://api.example.com/users/{userId}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine("User updated successfully");
+                    Console.WriteLine($"Updated user: {responseBody}");
+                }
+                else
+                {
+                    Console.WriteLine($"Update failed with status: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+    }
+
+    public static async Task Main()
+    {
+        await UpdateUser("123");
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- DELETE Request -->
+                <div class="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-red-400">DELETE 请求</h3>
+                        <button class="copy-btn bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm" onclick="copyCode(this)">复制</button>
+                    </div>
+                    <div class="code-block bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre><code class="text-gray-100">using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+// DELETE 请求删除资源
+public class HttpDeleteExample
+{
+    public static async Task<bool> DeleteUser(string userId)
+    {
+        using (var client = new HttpClient())
+        {
+            // 设置授权头
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer your-token");
+
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync($"https://api.example.com/users/{userId}");
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.NoContent:
+                        Console.WriteLine("User deleted successfully");
+                        return true;
+                    case HttpStatusCode.NotFound:
+                        Console.WriteLine("User not found");
+                        return false;
+                    default:
+                        Console.WriteLine($"Delete failed with status: {response.StatusCode}");
+                        return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return false;
+            }
+        }
+    }
+
+    public static async Task Main()
+    {
+        bool success = await DeleteUser("123");
+        if (success)
+        {
+            Console.WriteLine("Operation completed successfully");
+        }
+        else
+        {
+            Console.WriteLine("Operation failed");
+        }
+    }
+}
+
+// 使用 HttpClientFactory (推荐用于生产环境)
+public class HttpClientFactoryExample
+{
+    private readonly HttpClient _httpClient;
+
+    public HttpClientFactoryExample(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
+
+    public async Task<bool> DeleteUserAsync(string userId)
+    {
+        try
+        {
+            var response = await _httpClient.DeleteAsync($"/users/{userId}");
+            return response.IsSuccessStatusCode;
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine($"Request error: {ex.Message}");
+            return false;
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-400">&copy; 2024 CodeSnippetHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language tab switching
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.lang-tab');
+            const contents = document.querySelectorAll('.language-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+
+                    // Update active tab
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'bg-blue-600', 'text-white');
+                        t.classList.add('bg-gray-700', 'text-gray-300');
+                    });
+                    this.classList.add('active', 'bg-blue-600', 'text-white');
+                    this.classList.remove('bg-gray-700', 'text-gray-300');
+
+                    // Show corresponding content
+                    contents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    document.getElementById(lang + '-content').classList.remove('hidden');
+                });
+            });
+        });
+
+        // Copy to clipboard functionality
+        function copyCode(button) {
+            const codeBlock = button.closest('.bg-gray-800').querySelector('code');
+            const text = codeBlock.innerText;
+
+            navigator.clipboard.writeText(text).then(function() {
+                const originalText = button.innerText;
+                button.innerText = '已复制';
+                button.classList.add('copied');
+                
+                setTimeout(function() {
+                    button.innerText = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('复制失败: ', err);
+                alert('复制失败，请手动复制');
+            });
+        }
+
+        // Add scroll effect to navbar
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 50) {
+                $('nav').addClass('bg-opacity-95');
+            } else {
+                $('nav').removeClass('bg-opacity-95');
+            }
+        });
+    </script>
+</body>
+</html>
